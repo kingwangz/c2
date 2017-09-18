@@ -26,9 +26,12 @@ void goodsadd();
 void Commoditysearch(char *,int,int);
 
 int main() {
+    char commoditytype[15];
     //registered();
     //logins();
-    goodsadd();
+    //goodsadd();
+    scanf("%s",commoditytype);
+    Commoditysearch(commoditytype,1, 4);
     return 0;
 }
 
@@ -1004,7 +1007,7 @@ void goodsadd(){
 void Commoditysearch(char * COM,int x,int y){
     char Commoditynumber[20],marketname[15],discountstarttime[55],discountendtime[55],commoditytype[15],brand[15],retailprice[15],purchaseprice[55],inventory[55],discountrate[55];
     
-    char Commoditynumbera[500][20],marketnamea[500][15],discountstarttimea[500][15],discountendtimea[500][15],commoditytypea[500][15],branda[500][15],retailpricea[500][15],purchasepricea[500][15],inventorya[500][15],discountratea[500][15];
+    char Commoditynumbera[500][20],marketnamea[500][15],discountstarttimea[500][55],discountendtimea[500][55],commoditytypea[500][15],branda[500][15],retailpricea[500][15],purchasepricea[500][15],inventorya[500][15],discountratea[500][15];
     char Comparison[55],Comparisonb[55],tempa[55],tempb[55],tempc[55],tempd[55],tempe[55],tempf[55],tempg[55],temph[55],tempi[55],tempj[55];
     FILE *infile;
     int k=0;
