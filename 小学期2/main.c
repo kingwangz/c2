@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <stdlib.h>
 #include <math.h>
 
 void registered();
@@ -24,10 +23,12 @@ char * administratorIDverification(char *);
 void userinterface();
 void administratorinterface();
 void goodsadd();
+void Commoditysearch(char *,int,int);
 
 int main() {
     //registered();
-    logins();
+    //logins();
+    goodsadd();
     return 0;
 }
 
@@ -437,8 +438,8 @@ char  * administratorIDverification(char * IDA){
 
 
 void goodsadd(){
-    char Commoditynumber[20],marketname[15],discountstarttime[15],landing[15],departuretime[15],flighttime[15],firstseatnumber[55],bussinessseatnumber[55],economyseatnumber[55],modela[15],modelb[15],punctualityrate[15],firstfares[15],bussinessfares[15],economyfares[55],seat[55],determine[15],votes[15],Commoditynumberb[20],pilotsaa[15],pilotsbb[15],departuretimea[15],departuretimeb[15],departuretimec[15];
-    int valid=0;
+    char Commoditynumber[20],marketname[15],discountstarttime[55],discountendtime[55],commoditytype[15],brand[15],retailprice[15],purchaseprice[55],inventory[55],discountrate[55],determine[15],Commoditynumberb[20];
+    int valid=0,leapyear=0;
     char phantom;
     FILE *infile;
     while (valid==0) {
@@ -465,7 +466,7 @@ void goodsadd(){
             printf("system error\n");
             exit(1);
         }
-        while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s",Commoditynumberb,takeoff,landing,departuretime,flighttime,modela,modelb,punctualityrate,firstfares,bussinessfares,economyfares,airline,votes,pilotsa,pilotsb)!=EOF){
+        while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s",Commoditynumberb,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime)!=EOF){
             if(valid==1&&strcmp(Commoditynumber, Commoditynumberb)==0){
                 printf("Flight number already exists, please re-enter\n");
                 valid=0;
@@ -474,317 +475,503 @@ void goodsadd(){
         fclose(infile);
         
     }
-
-
     while (valid==1) {
+        printf("Supermarket\n");
+        printf("Currently supports the top ten supermarket nationwide\n");
+        scanf("%s",marketname);
+        scanf("%c",&phantom);
+        if (strcmp(marketname,"WM")==0||strcmp(marketname,"CF")==0||strcmp(marketname,"SN")==0) {
+            valid=0;
+        }
+        if (strcmp(marketname,"GM")==0||strcmp(marketname,"VG")==0||strcmp(marketname,"RT")==0) {
+            valid=0;
+        }
+        if (strcmp(marketname,"BL")==0||strcmp(marketname,"YH")==0||strcmp(marketname,"IZ")==0) {
+            valid=0;
+        }
+        if (strcmp(marketname,"WU")==0) {
+            valid=0;
+        }
+        if(valid==0&&phantom==' '){
+            valid=1;
+        }
+    }
+    printf("Commoditytype\n");
+    scanf("%s",commoditytype);
+    printf("Brand\n");
+    scanf("%s",brand);
+    while (valid==0) {
+        int k=1;
+        printf("Retail price\n");
+        printf("According  format: xxx.xx \n");
+        scanf("%s",retailprice);
+        scanf("%c",&phantom);
+        if(isdigit(retailprice[0])!=0){
+            valid=1;
+        }
+        while (valid==1&&k<15) {
+            if(isdigit(retailprice[k])==0){
+                valid=0;
+            }
+            k++;
+            if(retailprice[k]=='.'){
+                break;
+            }
+        }
+        if(valid==1&&retailprice[k]!='.'){
+            valid=0;
+        }
+        if(valid==1&&isdigit(retailprice[k+1])==0&&isdigit(retailprice[k+2])==0){
+            valid=0;
+        }
+        if(valid==1&&strlen(retailprice)!=k+3){
+            valid=0;
+        }
+        if(valid==1&&phantom==' '){
+            valid=0;
+        }
+    }
+    while (valid==1) {
+        int k=1;
+        printf("Purchase price\n");
+        printf("According  format: xxx.xx \n");
+        scanf("%s",purchaseprice);
+        scanf("%c",&phantom);
+        if(isdigit(purchaseprice[0])!=0){
+            valid=0;
+        }
+        while (valid==0&&k<15) {
+            if(isdigit(purchaseprice[k])==0){
+                valid=1;
+            }
+            k++;
+            if(purchaseprice[k]=='.'){
+                break;
+            }
+        }
+        if(valid==0&&purchaseprice[k]!='.'){
+            valid=1;
+        }
+        if(valid==0&&isdigit(purchaseprice[k+1])==0&&isdigit(purchaseprice[k+2])==0){
+            valid=1;
+        }
+        if(valid==0&&strlen(purchaseprice)!=k+3){
+            valid=1;
+        }
+        if(valid==0&&phantom==' '){
+            valid=1;
+        }
+    }
+    
+    while (valid==0) {
+        int k=1;
+        printf("Inventory\n");
+        printf("According  format: xxx\n");
+        scanf("%s",inventory);
+        scanf("%c",&phantom);
+        if(isdigit(inventory[0])!=0){
+            valid=1;
+        }
+        while (valid==1&&k<15) {
+            if(isdigit(inventory[k])==0){
+                valid=0;
+            }
+            k++;
+            if(inventory[k]=='\0'){
+                break;
+            }
+        }
+        if(valid==1&&strlen(inventory)!=k){
+            valid=0;
+        }
+        if(valid==1&&phantom==' '){
+            valid=0;
+        }
+    }
+    while (valid==1) {
+        printf("Discount rate\n");
+        printf("According to the percentage format: xx.x%% \n");
+        scanf("%s",discountrate);
+        scanf("%c",&phantom);
+        if(isdigit(discountrate[0])!=0&&isdigit(discountrate[1])!=0){
+            valid=0;
+        }
+        if(valid==0&&discountrate[2]!='.'){
+            valid=1;
+        }
+        if(valid==0&&isdigit(discountrate[3])==0){
+            valid=1;
+        }
+        if(valid==0&&discountrate[4]!='%'){
+            valid=1;
+        }
+        if(valid==0&&strlen(discountrate)!=5){
+            valid=1;
+        }
+        if(valid==0&&phantom==' '){
+            valid=1;
+        }
+    }
+    while (valid==0) {
         printf("Discount start time\n");
         printf("Match the time format yyyy:mm:dd:hh:mm\n");
         scanf("%s",discountstarttime);
         scanf("%c",&phantom);
         for(int k=0;k<4;k++) {
-            if(isdigit(discountstarttime[k])==0){
-                valid=0;
-            }
-        }
-        if(valid==0&&departuretime[4]!=':'){
-            valid=1;
-        }
-        if(valid==0&&(isdigit(departuretime[3])==0||isdigit(departuretime[4])==0)){
-            valid=1;
-        }
-        if(valid==0&&departuretime[3]>'6'){
-            valid=1;
-        }
-        if(valid==0&&departuretime[3]=='6'&&departuretime[4]!='0'){
-            valid=1;
-        }
-        if(valid==0&&strlen(departuretime)!=5){
-            valid=1;
-        }
-        if(valid==0&&phantom==' '){
-            valid=1;
-        }
-        if(valid==0&&abs(atoi(departuretime)-atoi(departuretimeb))<10){
-            printf("The pilot is flying, please re-enter the flight time\n");
-            valid=1;
-        }
-        if(valid==0&&abs(atoi(departuretime)-atoi(departuretimec))<10){
-            printf("The pilot is flying, please re-enter the flight time\n");
-            valid=1;
-        }
-    }
-    while (valid==0) {
-        printf("Flighttime\n");
-        printf("Match the time format hh:mm\n");
-        scanf("%s",flighttime);
-        scanf("%c",&phantom);
-        if(isdigit(flighttime[0])!=0&&isdigit(flighttime[1])!=0){
-            valid=1;
-        }
-        if(valid==1&&flighttime[2]!=':'){
-            valid=0;
-        }
-        if(valid==1&&(isdigit(flighttime[3])==0||isdigit(flighttime[4])==0)){
-            valid=0;
-        }
-        if(valid==1&&flighttime[3]>'6'){
-            valid=0;
-        }
-        if(valid==1&&flighttime[3]=='6'&&flighttime[4]!='0'){
-            valid=0;
-        }
-        if(valid==1&&strlen(flighttime)!=5){
-            valid=0;
-        }
-        if(valid==1&&phantom==' '){
-            valid=0;
-        }
-    }
-    while (valid==1) {
-        printf("Model\n");
-        printf("Choose models: large, medium and small\n");
-        scanf("%s",modela);
-        scanf("%c",&phantom);
-        if(strcmp(modela,"large")==0||strcmp(modela,"medium")==0||strcmp(modela,"small")==0){
-            valid=0;
-        }
-        if(valid==0&&phantom==' '){
-            valid=1;
-        }
-    }
-    while (valid==0) {
-        printf("Model\n");
-        if(strcmp(modela,"large")==0){
-            printf("Choose models: BY747,BY767,BY777\n");
-            scanf("%s",modelb);
-            scanf("%c",&phantom);
-            if(strcmp(modelb,"BY747")==0||strcmp(modelb,"BY767")==0|| strcmp(modelb,"BY777")==0){
+            if(isdigit(discountstarttime[k])!=0){
                 valid=1;
             }
-            if(valid==1&&phantom==' '){
-                valid=0;
-            }
         }
-        else if(strcmp(modela,"medium")==0){
-            printf("Choose models: BY737,BY738,TU5\n");
-            scanf("%s",modelb);
-            scanf("%c",&phantom);
-            if(strcmp(modelb,"BY737")==0||strcmp(modelb,"BY738")==0|| strcmp(modelb,"TU5")==0){
-                valid=1;
-            }
-            if(valid==1&&phantom==' '){
-                valid=0;
-            }
-        }
-        else{
-            printf("Choose models: YN7,AN4\n");
-            scanf("%s",modelb);
-            scanf("%c",&phantom);
-            if(strcmp(modelb,"YN7")==0||strcmp(modelb,"AN4")==0){
-                valid=1;
-            }
-            if(valid==1&&phantom==' '){
-                valid=0;
-            }
-        }
-    }
-    while (valid==1) {
-        printf("Punctualityrate\n");
-        printf("According to the percentage format: xx.x%% \n");
-        scanf("%s",punctualityrate);
-        scanf("%c",&phantom);
-        if(isdigit(punctualityrate[0])!=0&&isdigit(punctualityrate[1])!=0){
+        if(valid==1&&discountstarttime[4]!=':'){
             valid=0;
         }
-        if(valid==0&&punctualityrate[2]!='.'){
-            valid=1;
-        }
-        if(valid==0&&isdigit(punctualityrate[3])==0){
-            valid=1;
-        }
-        if(valid==0&&punctualityrate[4]!='%'){
-            valid=1;
-        }
-        if(valid==0&&strlen(punctualityrate)!=5){
-            valid=1;
-        }
-        if(valid==0&&phantom==' '){
-            valid=1;
-        }
-    }
-    while (valid==0) {
-        printf("FirstClass pilots\n");
-        printf("According  format: xxx.xx \n");
-        scanf("%s",firstfares);
-        scanf("%c",&phantom);
-        if(isdigit(firstfares[0])!=0&&isdigit(firstfares[1])!=0){
-            valid=1;
-        }
-        if(isdigit(firstfares[2])==0&&firstfares[2]!='.'&&valid==1){
+        if(valid==1&&isdigit(discountstarttime[5])==0&&isdigit(discountstarttime[6])==0){
             valid=0;
         }
-        if(valid==1&&firstfares[2]=='.'){
-            if(isdigit(firstfares[3])==0||isdigit(firstfares[4])==0){
+        if(valid==1&&discountstarttime[5]!='0'&&discountstarttime[5]!='1'){
+            valid=0;
+        }
+        if(valid==1&&discountstarttime[5]=='0'){
+            if(discountstarttime[6]=='0'){
                 valid=0;
-                if(valid==1&&strlen(firstfares)!=5){
+            }
+        }
+        if(valid==1&&discountstarttime[5]=='1'){
+            if(discountstarttime[6]>'2'){
+                valid=0;
+            }
+        }
+        if(valid==1&&discountstarttime[7]!=':'){
+            valid=0;
+        }
+        if(valid==1&&isdigit(discountstarttime[8])==0&&isdigit(discountstarttime[9])==0){
+            valid=0;
+        }
+        if(valid==1&&discountstarttime[8]>'3'){
+            valid=0;
+        }
+        if(valid==1&&atoi(discountstarttime)%400==0){
+            leapyear=1;
+        }
+        if(valid==1&&atoi(discountstarttime)%4==0){
+            leapyear=2;
+        }
+        if(valid==1&&atoi(discountstarttime)%100==0&&leapyear==2){
+            leapyear=0;
+        }
+        if(valid==1&&leapyear==2&&leapyear==1){
+            if(discountstarttime[5]=='0'&&discountstarttime[6]=='2'){
+                if(discountstarttime[8]>'2'){
+                    valid=0;
+                }
+                if(discountstarttime[8]=='0'&&discountstarttime[9]=='0'){
                     valid=0;
                 }
             }
         }
-        if(valid==1&&isdigit(firstfares[2])!=0){
-            if(firstfares[3]!='.'||isdigit(firstfares[4])==0||isdigit(firstfares[5])==0){
+        if(valid==1&&leapyear==0){
+            if(discountstarttime[5]=='0'&&discountstarttime[6]=='2'){
+                if(discountstarttime[8]=='2'){
+                    if(discountstarttime[9]>'8'){
+                        valid=0;
+                    }
+                }
+                if(discountstarttime[8]>'2'){
+                    valid=0;
+                }
+                if(discountstarttime[8]=='0'&&discountstarttime[9]=='0'){
+                    valid=0;
+                }
+            }
+        }
+        if(valid==1&&(discountstarttime[6]=='1'||discountstarttime[6]=='3')&&discountstarttime[5]=='0'){
+            if(discountstarttime[8]=='3'){
+                if(discountstarttime[9]>'1'){
+                    valid=0;
+                }
+                if(discountstarttime[8]=='0'&&discountstarttime[9]=='0'){
+                    valid=0;
+                }
+            }
+        }
+        if(valid==1&&(discountstarttime[6]=='5'||discountstarttime[6]=='7')&&discountstarttime[5]=='0'){
+            if(discountstarttime[8]=='3'){
+                if(discountstarttime[9]>'1'){
+                    valid=0;
+                }
+                if(discountstarttime[8]=='0'&&discountstarttime[9]=='0'){
+                    valid=0;
+                }
+            }
+        }
+        if(valid==1&&discountstarttime[6]=='8'&&discountstarttime[5]=='0'){
+            if(discountstarttime[8]=='3'){
+                if(discountstarttime[9]>'1'){
+                    valid=0;
+                }
+                if(discountstarttime[8]=='0'&&discountstarttime[9]=='0'){
+                    valid=0;
+                }
+            }
+        }
+        if(valid==1&&(discountstarttime[6]=='0'||discountstarttime[6]=='2')&&discountstarttime[5]=='1'){
+            if(discountstarttime[8]=='3'){
+                if(discountstarttime[9]>'1'){
+                    valid=0;
+                }
+                if(discountstarttime[8]=='0'&&discountstarttime[9]=='0'){
+                    valid=0;
+                }
+            }
+        }
+        if(valid==1&&(discountstarttime[6]=='4'||discountstarttime[6]=='6')&&discountstarttime[5]=='0'){
+            if(discountstarttime[8]=='3'){
+                if(discountstarttime[9]!='0'){
+                    valid=0;
+                }
+                if(discountstarttime[8]=='0'&&discountstarttime[9]=='0'){
+                    valid=0;
+                }
+            }
+        }
+        if(valid==1&&discountstarttime[6]=='9'&&discountstarttime[5]=='0'){
+            if(discountstarttime[8]=='3'){
+                if(discountstarttime[9]!='0'){
+                    valid=0;
+                }
+                if(discountstarttime[8]=='0'&&discountstarttime[9]=='0'){
+                    valid=0;
+                }
+            }
+        }
+        if(valid==1&&discountstarttime[6]=='1'&&discountstarttime[5]=='1'){
+            if(discountstarttime[8]=='3'){
+                if(discountstarttime[9]!='0'){
+                    valid=0;
+                }
+                if(discountstarttime[8]=='0'&&discountstarttime[9]=='0'){
+                    valid=0;
+                }
+            }
+        }
+        if(valid==1&&discountstarttime[10]!=':'){
+            valid=0;
+        }
+        if(valid==1&&discountstarttime[13]!=':'){
+            valid=0;
+        }
+        if(valid==1&&isdigit(discountstarttime[11])==0&&isdigit(discountstarttime[12])==0){
+            valid=0;
+        }
+        if(valid==1&&isdigit(discountstarttime[14])==0&&isdigit(discountstarttime[15])==0){
+            valid=0;
+        }
+        if(valid==1&&discountstarttime[11]>'2'){
+            valid=0;
+        }
+        if(valid==1&&discountstarttime[11]=='2'){
+            if(discountstarttime[12]>'4'){
                 valid=0;
             }
-            if(valid==1&&strlen(firstfares)!=6){
+        }
+        if(valid==1&&discountstarttime[11]=='2'&&discountstarttime[12]=='4'){
+            if(discountstarttime[14]!='0'||discountstarttime[15]!='0'){
                 valid=0;
             }
+        }
+        if(valid==1&&discountstarttime[14]>'6'){
+            valid=0;
+        }
+        if(valid==1&&discountstarttime[14]=='6'){
+            if(discountstarttime[15]!='0'){
+                valid=0;
+            }
+        }
+        if(valid==1&&strlen(discountstarttime)!=16){
+            valid=0;
         }
         if(valid==1&&phantom==' '){
             valid=0;
         }
     }
+    
     while (valid==1) {
-        printf("BussinessseatClass pilots\n");
-        printf("According  format: xxx.xx \n");
-        scanf("%s",bussinessfares);
+        printf("Discount end time\n");
+        printf("Match the time format yyyy:mm:dd:hh:mm\n");
+        scanf("%s",discountendtime);
         scanf("%c",&phantom);
-        if(isdigit(bussinessfares[0])!=0&&isdigit(bussinessfares[1])!=0){
-            valid=0;
+        for(int k=0;k<4;k++) {
+            if(isdigit(discountendtime[k])!=0){
+                valid=0;
+            }
         }
-        if(isdigit(bussinessfares[2])==0&&bussinessfares[2]!='.'&&valid==0){
+        if(valid==0&&discountendtime[4]!=':'){
             valid=1;
         }
-        if(valid==0&&bussinessfares[2]=='.'){
-            if(isdigit(bussinessfares[3])==0||isdigit(bussinessfares[4])==0){
-                valid=1;
-            }
-            if(valid==0&&strlen(bussinessfares)!=5){
+        if(valid==0&&isdigit(discountendtime[5])==0&&isdigit(discountendtime[6])==0){
+            valid=1;
+        }
+        if(valid==0&&discountendtime[5]!='0'&&discountendtime[5]!='1'){
+            valid=1;
+        }
+        if(valid==0&&discountendtime[5]=='0'){
+            if(discountendtime[6]=='0'){
                 valid=1;
             }
         }
-        if(valid==0&&isdigit(bussinessfares[2])!=0){
-            if(bussinessfares[3]!='.'||isdigit(bussinessfares[4])==0||isdigit(bussinessfares[5])==0){
+        if(valid==0&&discountendtime[5]=='1'){
+            if(discountendtime[6]>'2'){
                 valid=1;
             }
-            if(valid==0&&strlen(bussinessfares)!=6){
+        }
+        if(valid==0&&discountendtime[7]!=':'){
+            valid=1;
+        }
+        if(valid==0&&isdigit(discountendtime[8])==0&&isdigit(discountendtime[9])==0){
+            valid=1;
+        }
+        if(valid==0&&discountendtime[8]>'3'){
+            valid=1;
+        }
+        if(valid==0&&atoi(discountendtime)%400==0){
+            leapyear=1;
+        }
+        if(valid==0&&atoi(discountendtime)%4==0){
+            leapyear=2;
+        }
+        if(valid==0&&atoi(discountendtime)%100==0&&leapyear==2){
+            leapyear=0;
+        }
+        if(valid==0&&leapyear==2&&leapyear==1){
+            if(discountendtime[5]=='0'&&discountendtime[6]=='2'){
+                if(discountendtime[8]>'2'){
+                    valid=1;
+                }
+                if(discountendtime[8]=='0'&&discountendtime[9]=='0'){
+                    valid=1;
+                }
+            }
+        }
+        if(valid==0&&leapyear==0){
+            if(discountendtime[5]=='0'&&discountendtime[6]=='2'){
+                if(discountendtime[8]=='2'){
+                    if(discountendtime[9]>'8'){
+                        valid=1;
+                    }
+                }
+                if(discountendtime[8]=='0'&&discountendtime[9]=='0'){
+                    valid=1;
+                }
+            }
+        }
+        if(valid==0&&(discountendtime[6]=='1'||discountendtime[6]=='3')&&discountendtime[5]=='0'){
+            if(discountendtime[8]=='3'){
+                if(discountendtime[9]>'1'){
+                    valid=1;
+                }
+                if(discountendtime[8]=='0'&&discountendtime[9]=='0'){
+                    valid=1;
+                }
+            }
+        }
+        if(valid==0&&(discountendtime[6]=='5'||discountendtime[6]=='7')&&discountendtime[5]=='0'){
+            if(discountendtime[8]=='3'){
+                if(discountendtime[9]>'1'){
+                    valid=1;
+                }
+                if(discountendtime[8]=='0'&&discountendtime[9]=='0'){
+                    valid=1;
+                }
+            }
+        }
+        if(valid==0&&discountendtime[6]=='8'&&discountendtime[5]=='0'){
+            if(discountendtime[8]=='3'){
+                if(discountendtime[9]>'1'){
+                    valid=1;
+                }
+                if(discountendtime[8]=='0'&&discountendtime[9]=='0'){
+                    valid=1;
+                }
+            }
+        }
+        if(valid==0&&(discountendtime[6]=='0'||discountendtime[6]=='2')&&discountendtime[5]=='1'){
+            if(discountendtime[8]=='3'){
+                if(discountendtime[9]>'1'){
+                    valid=1;
+                }
+                if(discountendtime[8]=='0'&&discountendtime[9]=='0'){
+                    valid=1;
+                }
+            }
+        }
+        if(valid==0&&(discountendtime[6]=='4'||discountendtime[6]=='6')&&discountendtime[5]=='0'){
+            if(discountendtime[8]=='3'){
+                if(discountendtime[9]!='0'){
+                    valid=1;
+                }
+                if(discountendtime[8]=='0'&&discountendtime[9]=='0'){
+                    valid=1;
+                }
+            }
+        }
+        if(valid==0&&discountendtime[6]=='9'&&discountendtime[5]=='0'){
+            if(discountendtime[8]=='3'){
+                if(discountendtime[9]!='0'){
+                    valid=1;
+                }
+                if(discountendtime[8]=='0'&&discountendtime[9]=='0'){
+                    valid=1;
+                }
+            }
+        }
+        if(valid==0&&discountendtime[6]=='1'&&discountendtime[5]=='1'){
+            if(discountendtime[8]=='3'){
+                if(discountendtime[9]!='0'){
+                    valid=1;
+                }
+                if(discountendtime[8]=='0'&&discountendtime[9]=='0'){
+                    valid=1;
+                }
+            }
+        }
+        if(valid==0&&discountendtime[10]!=':'){
+            valid=1;
+        }
+        if(valid==0&&discountendtime[13]!=':'){
+            valid=1;
+        }
+        if(valid==0&&isdigit(discountendtime[11])==0&&isdigit(discountendtime[12])==0){
+            valid=1;
+        }
+        if(valid==0&&isdigit(discountendtime[14])==0&&isdigit(discountendtime[15])==0){
+            valid=1;
+        }
+        if(valid==0&&discountendtime[11]>'2'){
+            valid=1;
+        }
+        if(valid==0&&discountendtime[11]=='2'){
+            if(discountendtime[12]>'4'){
                 valid=1;
             }
+        }
+        if(valid==0&&discountendtime[11]=='2'&&discountendtime[12]=='4'){
+            if(discountendtime[14]!='0'||discountendtime[15]!='0'){
+                valid=1;
+            }
+        }
+        if(valid==0&&discountendtime[14]>'6'){
+            valid=1;
+        }
+        if(valid==0&&discountendtime[14]=='6'){
+            if(discountendtime[15]!='0'){
+                valid=1;
+            }
+        }
+        if(valid==0&&strlen(discountendtime)!=16){
+            valid=1;
         }
         if(valid==0&&phantom==' '){
             valid=1;
-        }
-    }
-    while (valid==0) {
-        printf("EconomyClass pilots\n");
-        printf("According  format: xxx.xx \n");
-        scanf("%s",economyfares);
-        scanf("%c",&phantom);
-        if(isdigit(economyfares[0])!=0&&isdigit(economyfares[1])!=0){
-            valid=1;
-        }
-        if(isdigit(economyfares[2])==0&&economyfares[2]!='.'&&valid==1){
-            valid=0;
-        }
-        if(valid==1&&economyfares[2]=='.'){
-            if(isdigit(economyfares[3])==0||isdigit(economyfares[4])==0){
-                valid=0;
-            }
-            if(valid==1&&strlen(economyfares)!=5){
-                valid=0;
-            }
-        }
-        if(valid==1&&isdigit(economyfares[2])!=0){
-            if(economyfares[3]!='.'||isdigit(economyfares[4])==0||isdigit(economyfares[5])==0){
-                valid=0;
-            }
-            if(valid==1&&strlen(economyfares)!=6){
-                valid=0;
-            }
-        }
-        if(valid==1&&phantom==' '){
-            valid=0;
-        }
-    }
-    while (valid==1) {
-        printf("Airline\n");
-        printf("Currently supports the top ten airlines nationwide\n");
-        scanf("%s",airline);
-        scanf("%c",&phantom);
-        if (strcmp(airline,"CA")==0||strcmp(airline,"MU")==0||strcmp(airline,"CZ")==0) {
-            valid=0;
-        }
-        if (strcmp(airline,"HU")==0||strcmp(airline,"ZH")==0||strcmp(airline,"FM")==0) {
-            valid=0;
-        }
-        if (strcmp(airline,"MF")==0||strcmp(airline,"3U")==0||strcmp(airline,"SC")==0) {
-            valid=0;
-        }
-        if (strcmp(airline,"9C")==0) {
-            valid=0;
-        }
-        if(valid==0&&phantom==' '){
-            valid=1;
-        }
-    }
-    if(strcmp(modela,"large")==0){
-        strcpy(votes, "360");
-        for(int i=0;i<55;i++){
-            firstseatnumber[i]='F';
-        }
-        for(int i=0;i<55;i++){
-            bussinessseatnumber[i]='C';
-        }
-        for(int i=0;i<55;i++){
-            economyseatnumber[i]='Y';
-        }
-        for(int i=0;i<55;i=i+6){
-            seat[i]='a';
-            seat[i+1]='b';
-            seat[i+2]='c';
-            seat[i+3]='d';
-            seat[i+4]='e';
-            seat[i+5]='f';
-        }
-        
-    }
-    if(strcmp(modela,"medium")==0){
-        strcpy(votes, "200");
-        for(int i=0;i<55;i++){
-            firstseatnumber[i]='F';
-        }
-        for(int i=0;i<55;i++){
-            bussinessseatnumber[i]='C';
-        }
-        for(int i=0;i<55;i++){
-            economyseatnumber[i]='Y';
-        }
-        for(int i=0;i<55;i=i+6){
-            seat[i]='a';
-            seat[i+1]='b';
-            seat[i+2]='c';
-            seat[i+3]='d';
-            seat[i+4]='e';
-            seat[i+5]='f';
-        }
-    }
-    if(strcmp(modela,"small")==0){
-        strcpy(votes, "100");
-        for(int i=0;i<55;i++){
-            firstseatnumber[i]='F';
-        }
-        for(int i=0;i<55;i++){
-            bussinessseatnumber[i]='C';
-        }
-        for(int i=0;i<55;i++){
-            economyseatnumber[i]='Y';
-        }
-        for(int i=0;i<55;i=i+6){
-            seat[i]='a';
-            seat[i+1]='b';
-            seat[i+2]='c';
-            seat[i+3]='d';
-            seat[i+4]='e';
-            seat[i+5]='f';
         }
     }
     while (valid==0) {
@@ -800,12 +987,207 @@ void goodsadd(){
         }
     }
     if(strcmp(determine,"determine")==0){
-        infile=fopen("flight.txt","a+");
+        infile=fopen("goods.txt","a+");
         if(infile==NULL){
             printf("system error\n");
             exit(1);
         }
-        fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n",Flightnumber,takeoff,landing,departuretime,flighttime,modela,modelb,punctualityrate,firstfares,bussinessfares,economyfares,airline,votes,pilotsa,pilotsb);
+        fprintf(infile,"%s %s %s %s %s %s %s %s %s %s\n",Commoditynumber,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime);
         fclose(infile);
     }
+}
+
+
+
+
+
+void Commoditysearch(char * COM,int x,int y){
+    char Commoditynumber[20],marketname[15],discountstarttime[55],discountendtime[55],commoditytype[15],brand[15],retailprice[15],purchaseprice[55],inventory[55],discountrate[55];
+    
+    char Commoditynumbera[500][20],marketnamea[500][15],discountstarttimea[500][15],discountendtimea[500][15],commoditytypea[500][15],branda[500][15],retailpricea[500][15],purchasepricea[500][15],inventorya[500][15],discountratea[500][15];
+    char Comparison[55],Comparisonb[55],tempa[55],tempb[55],tempc[55],tempd[55],tempe[55],tempf[55],tempg[55],temph[55],tempi[55],tempj[55];
+    FILE *infile;
+    int k=0;
+    infile=fopen("goods.txt","r");
+    if(infile==NULL){
+        printf("system error\n");
+        exit(1);
+    }
+    strcpy(Comparison, COM);
+    while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s",Commoditynumber,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime)!=EOF){
+        if(x==1){
+            strcpy(Comparisonb, commoditytype);
+        }
+        if(x==2){
+            strcpy(Comparisonb, marketname);
+        }
+        if(x==3){
+            strcpy(Comparisonb, brand);
+        }
+        if(x==4){
+            strcpy(Comparisonb, retailprice);
+        }
+        if(x==5){
+            strcpy(Comparisonb, discountrate);
+        }
+        
+        if( strcmp(Comparisonb,Comparison)==0){
+            strcpy(Commoditynumbera[k],Commoditynumber);
+            strcpy(marketnamea[k],marketname);
+            strcpy(commoditytypea[k],commoditytype);
+            strcpy(branda[k],brand);
+            strcpy(retailpricea[k],retailprice);
+            strcpy(purchasepricea[k],purchaseprice);
+            strcpy(inventorya[k],inventory);
+            strcpy(discountratea[k],discountrate);
+            strcpy(discountstarttimea[k],discountstarttime);
+            strcpy(discountendtimea[k],discountendtime);
+            k++;
+        }
+    }
+    fclose(infile);
+    if(y==1){
+        for(int i=0;i<k-1;i++) {
+            for(int j=i+1;j<k;j++){
+                if(strcmp(retailpricea[i],retailpricea[j])>0){
+                    
+                    strcpy(tempa, Commoditynumbera[i]);
+                    strcpy(tempb, marketnamea[i]);
+                    strcpy(tempc, commoditytypea[i]);
+                    strcpy(tempd, branda[i]);
+                    strcpy(tempe, retailpricea[i]);
+                    strcpy(tempf, purchasepricea[i]);
+                    strcpy(tempg, inventorya[i]);
+                    strcpy(temph, discountratea[i]);
+                    strcpy(tempi, discountstarttimea[i]);
+                    strcpy(tempj, discountendtimea[i]);
+                    
+                    strcpy(Commoditynumbera[i], Commoditynumbera[j]);
+                    strcpy(marketnamea[i], marketnamea[j]);
+                    strcpy(commoditytypea[i], commoditytypea[j]);
+                    strcpy(branda[i], branda[j]);
+                    strcpy(retailpricea[i], retailpricea[j]);
+                    strcpy(purchasepricea[i], purchasepricea[j]);
+                    strcpy(inventorya[i], inventorya[j]);
+                    strcpy(discountratea[i], discountratea[j]);
+                    strcpy(discountstarttimea[i], discountstarttimea[j]);
+                    strcpy(discountendtimea[i], discountendtimea[j]);
+                    
+                    strcpy(Commoditynumbera[j], tempa);
+                    strcpy(marketnamea[j], tempb);
+                    strcpy(commoditytypea[j], tempc);
+                    strcpy(branda[j], tempd);
+                    strcpy(retailpricea[j], tempe);
+                    strcpy(purchasepricea[j], tempf);
+                    strcpy(inventorya[j], tempg);
+                    strcpy(discountratea[j], temph);
+                    strcpy(discountstarttimea[j], tempi);
+                    strcpy(discountendtimea[j], tempj);
+                    
+                }
+            }
+        }
+        for (int g=0; g<k; g++) {
+            printf("%s %s %s %s %s %s %s %s %s %s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g]);
+        }
+    }
+    if(y==2){
+        for(int i=0;i<k-1;i++) {
+            for(int j=i+1;j<k;j++){
+                if(strcmp(inventorya[i],inventorya[j])>0){
+                    
+                    strcpy(tempa, Commoditynumbera[i]);
+                    strcpy(tempb, marketnamea[i]);
+                    strcpy(tempc, commoditytypea[i]);
+                    strcpy(tempd, branda[i]);
+                    strcpy(tempe, retailpricea[i]);
+                    strcpy(tempf, purchasepricea[i]);
+                    strcpy(tempg, inventorya[i]);
+                    strcpy(temph, discountratea[i]);
+                    strcpy(tempi, discountstarttimea[i]);
+                    strcpy(tempj, discountendtimea[i]);
+                    
+                    strcpy(Commoditynumbera[i], Commoditynumbera[j]);
+                    strcpy(marketnamea[i], marketnamea[j]);
+                    strcpy(commoditytypea[i], commoditytypea[j]);
+                    strcpy(branda[i], branda[j]);
+                    strcpy(retailpricea[i], retailpricea[j]);
+                    strcpy(purchasepricea[i], purchasepricea[j]);
+                    strcpy(inventorya[i], inventorya[j]);
+                    strcpy(discountratea[i], discountratea[j]);
+                    strcpy(discountstarttimea[i], discountstarttimea[j]);
+                    strcpy(discountendtimea[i], discountendtimea[j]);
+                    
+                    strcpy(Commoditynumbera[j], tempa);
+                    strcpy(marketnamea[j], tempb);
+                    strcpy(commoditytypea[j], tempc);
+                    strcpy(branda[j], tempd);
+                    strcpy(retailpricea[j], tempe);
+                    strcpy(purchasepricea[j], tempf);
+                    strcpy(inventorya[j], tempg);
+                    strcpy(discountratea[j], temph);
+                    strcpy(discountstarttimea[j], tempi);
+                    strcpy(discountendtimea[j], tempj);
+                    
+                }
+            }
+        }
+        for (int g=0; g<k; g++) {
+            printf("%s %s %s %s %s %s %s %s %s %s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g]);
+        }
+    }
+    if(y==3){
+        for(int i=0;i<k-1;i++) {
+            for(int j=i+1;j<k;j++){
+                if(strcmp(discountratea[i],discountratea[j])>0){
+                    
+                    strcpy(tempa, Commoditynumbera[i]);
+                    strcpy(tempb, marketnamea[i]);
+                    strcpy(tempc, commoditytypea[i]);
+                    strcpy(tempd, branda[i]);
+                    strcpy(tempe, retailpricea[i]);
+                    strcpy(tempf, purchasepricea[i]);
+                    strcpy(tempg, inventorya[i]);
+                    strcpy(temph, discountratea[i]);
+                    strcpy(tempi, discountstarttimea[i]);
+                    strcpy(tempj, discountendtimea[i]);
+                    
+                    strcpy(Commoditynumbera[i], Commoditynumbera[j]);
+                    strcpy(marketnamea[i], marketnamea[j]);
+                    strcpy(commoditytypea[i], commoditytypea[j]);
+                    strcpy(branda[i], branda[j]);
+                    strcpy(retailpricea[i], retailpricea[j]);
+                    strcpy(purchasepricea[i], purchasepricea[j]);
+                    strcpy(inventorya[i], inventorya[j]);
+                    strcpy(discountratea[i], discountratea[j]);
+                    strcpy(discountstarttimea[i], discountstarttimea[j]);
+                    strcpy(discountendtimea[i], discountendtimea[j]);
+                    
+                    strcpy(Commoditynumbera[j], tempa);
+                    strcpy(marketnamea[j], tempb);
+                    strcpy(commoditytypea[j], tempc);
+                    strcpy(branda[j], tempd);
+                    strcpy(retailpricea[j], tempe);
+                    strcpy(purchasepricea[j], tempf);
+                    strcpy(inventorya[j], tempg);
+                    strcpy(discountratea[j], temph);
+                    strcpy(discountstarttimea[j], tempi);
+                    strcpy(discountendtimea[j], tempj);
+                    
+                }
+            }
+        }
+        for (int g=0; g<k; g++) {
+            printf("%s %s %s %s %s %s %s %s %s %s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g]);
+        }
+
+    }
+    if(y==4){
+        for (int g=0; g<k; g++) {
+            printf("%s %s %s %s %s %s %s %s %s %s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g]);
+        }
+        
+    }
+    
+    
 }
