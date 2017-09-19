@@ -26,12 +26,12 @@ void goodsadd();
 void Commoditysearch(char *,int,int);
 
 int main() {
-    char commoditytype[15];
+    //char commoditytype[15];
     //registered();
     //logins();
-    //goodsadd();
-    scanf("%s",commoditytype);
-    Commoditysearch(commoditytype,1, 4);
+    goodsadd();
+    //scanf("%s",commoditytype);
+    //Commoditysearch(commoditytype,1, 4);
     return 0;
 }
 
@@ -442,7 +442,7 @@ char  * administratorIDverification(char * IDA){
 
 void goodsadd(){
     char Commoditynumber[20],marketname[15],discountstarttime[55],discountendtime[55],commoditytype[15],brand[15],retailprice[15],purchaseprice[55],inventory[55],discountrate[55],determine[15],Commoditynumberb[20];
-    int valid=0,leapyear=0;
+    int valid=0;
     char phantom;
     FILE *infile;
     while (valid==0) {
@@ -464,7 +464,7 @@ void goodsadd(){
         if(valid==1&&phantom==' '){
             valid=0;
         }
-        infile=fopen("goods.txt","r");
+        infile=fopen("goods.txt","a");
         if(infile==NULL){
             printf("system error\n");
             exit(1);
@@ -504,7 +504,7 @@ void goodsadd(){
     printf("Brand\n");
     scanf("%s",brand);
     while (valid==0) {
-        int k=1;
+        int k=0;
         printf("Retail price\n");
         printf("According  format: xxx.xx \n");
         scanf("%s",retailprice);
@@ -535,7 +535,7 @@ void goodsadd(){
         }
     }
     while (valid==1) {
-        int k=1;
+        int k=0;
         printf("Purchase price\n");
         printf("According  format: xxx.xx \n");
         scanf("%s",purchaseprice);
@@ -616,6 +616,7 @@ void goodsadd(){
         }
     }
     while (valid==0) {
+        int leapyear=0;
         printf("Discount start time\n");
         printf("Match the time format yyyy:mm:dd:hh:mm\n");
         scanf("%s",discountstarttime);
@@ -662,7 +663,7 @@ void goodsadd(){
         if(valid==1&&atoi(discountstarttime)%100==0&&leapyear==2){
             leapyear=0;
         }
-        if(valid==1&&leapyear==2&&leapyear==1){
+        if(valid==1&&(leapyear==2||leapyear==1)){
             if(discountstarttime[5]=='0'&&discountstarttime[6]=='2'){
                 if(discountstarttime[8]>'2'){
                     valid=0;
@@ -799,6 +800,7 @@ void goodsadd(){
     }
     
     while (valid==1) {
+        int leapyear=0;
         printf("Discount end time\n");
         printf("Match the time format yyyy:mm:dd:hh:mm\n");
         scanf("%s",discountendtime);
@@ -807,6 +809,9 @@ void goodsadd(){
             if(isdigit(discountendtime[k])!=0){
                 valid=0;
             }
+        }
+        if(valid==0&&strcmp(discountendtime,discountstarttime)<0){
+            valid=1;
         }
         if(valid==0&&discountendtime[4]!=':'){
             valid=1;
@@ -845,7 +850,7 @@ void goodsadd(){
         if(valid==0&&atoi(discountendtime)%100==0&&leapyear==2){
             leapyear=0;
         }
-        if(valid==0&&leapyear==2&&leapyear==1){
+        if(valid==0&&(leapyear==2||leapyear==1)){
             if(discountendtime[5]=='0'&&discountendtime[6]=='2'){
                 if(discountendtime[8]>'2'){
                     valid=1;
@@ -861,6 +866,9 @@ void goodsadd(){
                     if(discountendtime[9]>'8'){
                         valid=1;
                     }
+                }
+                if(discountendtime[8]>'2'){
+                    valid=1;
                 }
                 if(discountendtime[8]=='0'&&discountendtime[9]=='0'){
                     valid=1;
