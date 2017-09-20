@@ -31,6 +31,7 @@ void goodsmanagement(char *);
 void userinformation(char *);
 void administratorinformation(char *);
 void Order(char *);
+void ordermanagement(char *,int);
 void Recharge(char *);
 void purchase(char *);
 char * timeas();
@@ -520,7 +521,16 @@ void administratorinterface(char * ID){
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
-        {//ordermanagement();
+        {printf("(a)Filter by retail price\n");
+            printf("(b)Filter by Sales\n");
+            scanf("%s",a);
+            scanf("%c",&phantom);
+            if(strcmp(a,"a")==0)
+            {ordermanagement(ID,1);
+            }
+            else if(strcmp(a,"b")==0)
+            {ordermanagement(ID,2);
+            }
         }
         else if(strcmp(a,"b")==0)
         {goodsmanagement(ID);
@@ -2059,12 +2069,164 @@ void Order(char * ID){
             strcpy(inventoryba[k],inventoryb);
             k++;
         }
+        fclose(infile);
         for (int g=0; g<k; g++) {
             printf("%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
         }
 
     }
 }
+
+void ordermanagement(char * ID,int y){
+    char IDA[20],name[15],gender[15],phone[15],pass[15],mailbox[15],supermarket[15];
+    char IDF[55];
+    char Commoditynumber[20],marketname[15],discountstarttime[55],discountendtime[55],commoditytype[15],brand[15],retailprice[15],purchaseprice[55],inventory[55],inventoryb[55],discountrate[55],Sales[55],Ordernumber[55];
+    char Commoditynumbera[500][20],marketnamea[500][15],discountstarttimea[500][55],discountendtimea[500][55],commoditytypea[500][15],branda[500][15],retailpricea[500][15],purchasepricea[500][55],inventorya[500][55],inventoryba[500][55],discountratea[500][55],Salesa[500][55],Ordernumbera[500][55];
+    char Comparison[55],Comparisonb[55],tempa[55],tempb[55],tempc[55],tempd[55],tempe[55],tempf[55],tempg[55],temph[55],tempi[55],tempj[55],tempk[55],templ[55],tempm[55];
+    int k=0;
+    char file[]="a.txt";
+    FILE *infile;
+    strcpy(IDF, ID);
+    strcat(IDF, file);
+    infile=fopen(IDF,"r");
+    if (infile!=NULL) {
+        printf("system error\n");
+        exit(1);
+    }
+    fscanf(infile,"%s %s %s %s %s %s %s",IDA,name,gender,phone,pass,mailbox,supermarket);
+    fclose(infile);
+    infile=fopen("Order.txt","r");
+    strcpy(Comparison,supermarket);
+    while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumber,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime,Sales,inventoryb)!=EOF){
+        strcpy(Comparisonb,marketname);
+        if(strcmp(Comparisonb,Comparison)==0){
+            strcpy(Commoditynumbera[k],Commoditynumber);
+            strcpy(marketnamea[k],marketname);
+            strcpy(commoditytypea[k],commoditytype);
+            strcpy(branda[k],brand);
+            strcpy(retailpricea[k],retailprice);
+            strcpy(purchasepricea[k],purchaseprice);
+            strcpy(inventorya[k],inventory);
+            strcpy(discountratea[k],discountrate);
+            strcpy(discountstarttimea[k],discountstarttime);
+            strcpy(discountendtimea[k],discountendtime);
+            strcpy(Salesa[k],Sales);
+            strcpy(Ordernumbera[k],Ordernumber);
+            strcpy(inventoryba[k],inventoryb);
+            k++;
+        }
+    }
+    fclose(infile);
+    if(y==1){
+        for(int i=0;i<k-1;i++) {
+            for(int j=i+1;j<k;j++){
+                if(strcmp(retailpricea[i],retailpricea[j])>0){
+                    
+                    strcpy(tempa, Commoditynumbera[i]);
+                    strcpy(tempb, marketnamea[i]);
+                    strcpy(tempc, commoditytypea[i]);
+                    strcpy(tempd, branda[i]);
+                    strcpy(tempe, retailpricea[i]);
+                    strcpy(tempf, purchasepricea[i]);
+                    strcpy(tempg, inventorya[i]);
+                    strcpy(temph, discountratea[i]);
+                    strcpy(tempi, discountstarttimea[i]);
+                    strcpy(tempj, discountendtimea[i]);
+                    strcpy(tempk, Salesa[i]);
+                    strcpy(templ, Ordernumbera[i]);
+                    strcpy(tempm, inventoryba[i]);
+                    
+                    strcpy(Commoditynumbera[i], Commoditynumbera[j]);
+                    strcpy(marketnamea[i], marketnamea[j]);
+                    strcpy(commoditytypea[i], commoditytypea[j]);
+                    strcpy(branda[i], branda[j]);
+                    strcpy(retailpricea[i], retailpricea[j]);
+                    strcpy(purchasepricea[i], purchasepricea[j]);
+                    strcpy(inventorya[i], inventorya[j]);
+                    strcpy(discountratea[i], discountratea[j]);
+                    strcpy(discountstarttimea[i], discountstarttimea[j]);
+                    strcpy(discountendtimea[i], discountendtimea[j]);
+                    strcpy(Salesa[i], Salesa[j]);
+                    strcpy(Ordernumbera[i], Ordernumbera[j]);
+                    strcpy(inventoryba[i], inventoryba[j]);
+                    
+                    strcpy(Commoditynumbera[j], tempa);
+                    strcpy(marketnamea[j], tempb);
+                    strcpy(commoditytypea[j], tempc);
+                    strcpy(branda[j], tempd);
+                    strcpy(retailpricea[j], tempe);
+                    strcpy(purchasepricea[j], tempf);
+                    strcpy(inventorya[j], tempg);
+                    strcpy(discountratea[j], temph);
+                    strcpy(discountstarttimea[j], tempi);
+                    strcpy(discountendtimea[j], tempj);
+                    strcpy(Salesa[j], tempk);
+                    strcpy(Ordernumbera[j], templ);
+                    strcpy(inventoryba[j], tempm);
+                    
+                }
+            }
+        }
+        for (int g=0; g<k; g++) {
+            printf("%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
+        }
+    }
+    if(y==2){
+        for(int i=0;i<k-1;i++) {
+            for(int j=i+1;j<k;j++){
+                if(strcmp(Salesa[i],Salesa[j])>0){
+                    
+                    strcpy(tempa, Commoditynumbera[i]);
+                    strcpy(tempb, marketnamea[i]);
+                    strcpy(tempc, commoditytypea[i]);
+                    strcpy(tempd, branda[i]);
+                    strcpy(tempe, retailpricea[i]);
+                    strcpy(tempf, purchasepricea[i]);
+                    strcpy(tempg, inventorya[i]);
+                    strcpy(temph, discountratea[i]);
+                    strcpy(tempi, discountstarttimea[i]);
+                    strcpy(tempj, discountendtimea[i]);
+                    strcpy(tempk, Salesa[i]);
+                    strcpy(templ, Ordernumbera[i]);
+                    strcpy(tempm, inventoryba[i]);
+                    
+                    strcpy(Commoditynumbera[i], Commoditynumbera[j]);
+                    strcpy(marketnamea[i], marketnamea[j]);
+                    strcpy(commoditytypea[i], commoditytypea[j]);
+                    strcpy(branda[i], branda[j]);
+                    strcpy(retailpricea[i], retailpricea[j]);
+                    strcpy(purchasepricea[i], purchasepricea[j]);
+                    strcpy(inventorya[i], inventorya[j]);
+                    strcpy(discountratea[i], discountratea[j]);
+                    strcpy(discountstarttimea[i], discountstarttimea[j]);
+                    strcpy(discountendtimea[i], discountendtimea[j]);
+                    strcpy(Salesa[i], Salesa[j]);
+                    strcpy(Ordernumbera[i], Ordernumbera[j]);
+                    strcpy(inventoryba[i], inventoryba[j]);
+                    
+                    strcpy(Commoditynumbera[j], tempa);
+                    strcpy(marketnamea[j], tempb);
+                    strcpy(commoditytypea[j], tempc);
+                    strcpy(branda[j], tempd);
+                    strcpy(retailpricea[j], tempe);
+                    strcpy(purchasepricea[j], tempf);
+                    strcpy(inventorya[j], tempg);
+                    strcpy(discountratea[j], temph);
+                    strcpy(discountstarttimea[j], tempi);
+                    strcpy(discountendtimea[j], tempj);
+                    strcpy(Salesa[j], tempk);
+                    strcpy(Ordernumbera[j], templ);
+                    strcpy(inventoryba[j], tempm);
+                }
+            }
+        }
+        for (int g=0; g<k; g++) {
+            printf("%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
+        }
+    }
+
+}
+
 
 char * timeas(){
     char timea[551];
