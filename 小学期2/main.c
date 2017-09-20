@@ -21,31 +21,41 @@ void userlogin();
 void administratorlogin();
 char * userIDverification(char *);
 char * administratorIDverification(char *);
-void userinterface();
-void administratorinterface();
+void userinterface(char *);
+void administratorinterface(char *);
 void goodsadd();
 void Commoditysearch(char *,int,int);
-void userinterface();
-void administratorinterface();
-void goodsinquiries();
-void recommendation();
-void userinformation();
+void goodsinquiries(char *);
+void recommendation(char *);
+void userinformation(char *);
+void administratorinformation(char *);
 void Order();
 void Recharge(char *);
 void purchase(char *);
 char * timeas();
 
 int main() {
-    char ID[15];
-    scanf("%s",ID);
-    //char commoditytype[15];
-    //registered();
-    //logins();
-    //goodsadd();
-    //scanf("%s",commoditytype);
-    //Commoditysearch(commoditytype,1, 4);
-    //Recharge(ID);
-    purchase(ID);
+    char phantom;
+    char a[2];
+    int valid=0;
+    while(valid==0)
+    {
+        printf("(a)Registered\n");
+        printf("(b)Logins\n");
+        printf("(c)Exit\n");
+        scanf("%s",a);
+        scanf("%c",&phantom);
+        if(strcmp(a,"a")==0)
+        {registered();
+        }
+        else if(strcmp(a,"b")==0)
+        {logins();
+        }
+        else if(strcmp(a,"c")==0)
+        {valid=1;
+        }
+    }
+
     return 0;
 }
 
@@ -54,11 +64,12 @@ int main() {
 void registered(){
     char phantom;
     char code[10],a[2];
-    while(1)
+    int valid=0;
+    while(valid==0)
     {
         printf("(a)Individual user registration\n");
         printf("(b)Administrator registration\n");
-        printf("(c)	Exit\n");
+        printf("(c)	Return\n");
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
@@ -76,13 +87,13 @@ void registered(){
             }
         }
         else if(strcmp(a,"c")==0)
-        {exit(1);}
+        {valid=1;}
     }
 }
 
 
 void personal(){
-    char ID[20],name[15],gender[15],phone[15],password[15],mailbox[15],IDF[15],address[15],Balance[15];
+    char ID[20],name[15],gender[15],phone[15],pass[15],mailbox[15],IDF[15],address[15],Balance[15];
     int valid=0;
     char phantom;
     strcpy(Balance,"0.00");
@@ -146,7 +157,7 @@ void personal(){
         }
     }
     printf("Password\n");
-    scanf("%s",password);
+    scanf("%s",pass);
     while(valid==1){
         printf("Mailbox\n");
         printf("The correct format is ***@***.***\n");
@@ -191,7 +202,7 @@ void personal(){
         printf("system error\n");
         exit(1);
     }
-    fprintf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,password,mailbox,address,Balance);
+    fprintf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
     fclose(infile);
     Recharge(ID);
 }
@@ -199,7 +210,7 @@ void personal(){
 
 
 void administrator(){
-    char IDA[20],name[15],gender[15],phone[15],password[15],mailbox[15],supermarket[15],IDF[15];
+    char IDA[20],name[15],gender[15],phone[15],pass[15],mailbox[15],supermarket[15],IDF[15];
     int valid=0;
     char phantom;
     char file[]="a.txt";
@@ -261,7 +272,7 @@ void administrator(){
         }
     }
     printf("Password\n");
-    scanf("%s",password);
+    scanf("%s",pass);
     while(valid==1){
         printf("Mailbox\n");
         printf("The correct format is ***@***.***\n");
@@ -325,7 +336,7 @@ void administrator(){
         printf("system error\n");
         exit(1);
     }
-    fprintf(infile,"%s %s %s %s %s %s %s",IDA,name,gender,phone,password,mailbox,supermarket);
+    fprintf(infile,"%s %s %s %s %s %s %s",IDA,name,gender,phone,pass,mailbox,supermarket);
     fclose(infile);
 }
 
@@ -334,11 +345,12 @@ void administrator(){
 void logins(){
     char phantom;
     char a[2];
-    while(1)
+    int valid=0;
+    while(valid==0)
     {
         printf("(a)Individual user login\n");
         printf("(b)Administrator login\n");
-        printf("(c)	Exit\n");
+        printf("(c)Return\n");
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
@@ -348,7 +360,7 @@ void logins(){
         {administratorlogin();
         }
         else if(strcmp(a,"c")==0)
-        {exit(1);}
+        {valid=1;}
     }
     
 }
@@ -373,7 +385,7 @@ void userlogin(){
         scanf("%s",password);
         if(strcmp(IDpassword,password)==0){
             printf("Welcome back!\n");
-            userinterface();
+            userinterface(ID);
         }
         else{
             printf("Password is wrong, please try again.\n");
@@ -401,7 +413,7 @@ void administratorlogin(){
         scanf("%s",password);
         if(strcmp(IDpassword,password)==0){
             printf("Welcome back!\n");
-            administratorinterface();
+            administratorinterface(ID);
         }
         else{
             printf("Password is wrong, please try again.\n");
@@ -456,60 +468,68 @@ char  * administratorIDverification(char * IDA){
 
 
 
-void userinterface(){
+void userinterface(char * ID){
     char phantom;
     char a[2];
-    while(1)
+    int valid=0;
+    while(valid==0)
     {
         printf("(a)Goods inquiries\n");
         printf("(b)Recommendation\n");
         printf("(c)Personal information\n");
         printf("(d)Order\n");
-        printf("(e)Exit\n");
+        printf("(e)Balance inquiries and recharge\n");
+        printf("(f)Return\n");
         scanf("%s",a);
         scanf("%c",&phantom);
-        if(a[0]=='a')
-        {goodsinquiries();
+        if(strcmp(a,"a")==0)
+        {goodsinquiries(ID);
         }
-        else if(a[0]=='b')
-        {recommendation();
+        else if(strcmp(a,"b")==0)
+        {recommendation(ID);
         }
-        else if(a[0]=='c')
-        {//userinformation();
+        else if(strcmp(a,"c")==0)
+        {userinformation(ID);
         }
-        else if(a[0]=='d')
+        else if(strcmp(a,"d")==0)
         {//Order();
         }
-        else if(a[0]=='e')
-        {exit(1);}
+        else if(strcmp(a,"e")==0)
+        {Recharge(ID);
+        }
+        else if(strcmp(a,"f")==0)
+        {valid=1;
+        }
     }
     
     
 }
 
 
-void administratorinterface(){
+void administratorinterface(char * ID){
     char phantom;
     char a[2];
-    while(1)
+    int valid=0;
+    while(valid==0)
     {
         printf("(a)Order management\n");
         printf("(b)Flight Management\n");
         printf("(c)Personal information\n");
-        printf("(d)Exit\n");
+        printf("(d)Return\n");
         scanf("%s",a);
         scanf("%c",&phantom);
-        if(a[0]=='a')
+        if(strcmp(a,"a")==0)
         {//ordermanagement();
         }
-        else if(a[0]=='b')
+        else if(strcmp(a,"b")==0)
         {//flightmanagement();
         }
-        else if(a[0]=='c')
-        {//modification();
+        else if(strcmp(a,"c")==0)
+        {administratorinformation(ID);
         }
-        else if(a[0]=='d')
-        {exit(1);}
+        else if(strcmp(a,"d")==0)
+        {valid=1;
+        }
     }
     
     
@@ -517,41 +537,41 @@ void administratorinterface(){
 
 
 
-void goodsinquiries(){
+void goodsinquiries(char * ID){
     char commoditytype[15],marketname[15],brand[15];
     char phantom;
     char a[2];
-    int valid=1;
-    while(1)
+    int valid=1,valida=0;
+    while(valida==0)
     {
         printf("(a)Commoditytype\n");
         printf("(b)Marketname\n");
         printf("(c)Brand\n");
-        printf("(d)Exit\n");
+        printf("(d)Return\n");
         scanf("%s",a);
         scanf("%c",&phantom);
-        if(a[0]=='a')
+        if(strcmp(a,"a")==0)
         {   printf("Commoditytype\n");
             scanf("%s",commoditytype);
             printf("(a)Filter by retail price\n");
             printf("(b)Filter by Sales\n");
             printf("(c)Filter by discount rate\n");
-            printf("(d)Exit\n");
             scanf("%s",a);
             scanf("%c",&phantom);
-            if(a[0]=='a')
+            if(strcmp(a,"a")==0)
             {Commoditysearch(commoditytype,1, 1);
+            purchase(ID);
             }
-            else if(a[0]=='b')
+            else if(strcmp(a,"b")==0)
             {Commoditysearch(commoditytype, 1, 2);
+            purchase(ID);
             }
-            else if(a[0]=='b')
+            else if(strcmp(a,"c")==0)
             {Commoditysearch(commoditytype, 1, 3);
+            purchase(ID);
             }
-            else if(a[0]=='d')
-            {exit(1);}
         }
-        else if(a[0]=='b')
+        else if(strcmp(a,"b")==0)
         {while (valid==1) {
             printf("Supermarket\n");
             printf("Currently supports the top ten supermarket nationwide\n");
@@ -575,73 +595,308 @@ void goodsinquiries(){
             printf("(a)Filter by retail price\n");
             printf("(b)Filter by Sales\n");
             printf("(c)Filter by discount rate\n");
-            printf("(d)Exit\n");
             scanf("%s",a);
             scanf("%c",&phantom);
-            if(a[0]=='a')
+            if(strcmp(a,"a")==0)
             {Commoditysearch(marketname,2, 1);
+            purchase(ID);
             }
-            else if(a[0]=='b')
+            else if(strcmp(a,"b")==0)
             {Commoditysearch(marketname,2, 2);
+            purchase(ID);
             }
-            else if(a[0]=='b')
+            else if(strcmp(a,"c")==0)
             {Commoditysearch(marketname,2, 3);
+            purchase(ID);
             }
-            else if(a[0]=='d')
-            {exit(1);}
-
         }
 
         }
-        else if(a[0]=='c')
+        else if(strcmp(a,"c")==0)
         {printf("Brand\n");
             scanf("%s",brand);
             printf("(a)Filter by retail price\n");
             printf("(b)Filter by Sales\n");
             printf("(c)Filter by discount rate\n");
-            printf("(d)Exit\n");
             scanf("%s",a);
             scanf("%c",&phantom);
-            if(a[0]=='a')
+            if(strcmp(a,"a")==0)
             {Commoditysearch(brand,3, 1);
+            purchase(ID);
             }
-            else if(a[0]=='b')
+            else if(strcmp(a,"b")==0)
             {Commoditysearch(brand,3, 2);
+            purchase(ID);
             }
-            else if(a[0]=='b')
+            else if(strcmp(a,"c")==0)
             {Commoditysearch(brand,3, 3);
+            purchase(ID);
             }
-            else if(a[0]=='d')
-            {exit(1);}
 
         }
-        else if(a[0]=='d')
-        {exit(1);}
+        else if(strcmp(a,"d")==0)
+        {valida=1;
+        }
     }
 }
 
-void recommendation(){
+void recommendation(char * ID){
     char Commoditynumber[20],retailprice[15];
     char phantom;
     char a[2];
-    while(1)
+    int valid=0;
+    while(valid==0)
     {
         printf("(a)Commodity price\n");
         printf("(b)Hot items\n");
-        printf("(c)Exit\n");
+        printf("(c)Return\n");
         scanf("%s",a);
         scanf("%c",&phantom);
-        if(a[0]=='a')
+        if(strcmp(a,"a")==0)
         {Commoditysearch(retailprice,4, 4);
+        purchase(ID);
         }
-        else if(a[0]=='b')
+        else if(strcmp(a,"b")==0)
         {Commoditysearch(Commoditynumber,4, 1);
+        purchase(ID);
         }
-        else if(a[0]=='c')
-        {exit(1);}
+        else if(strcmp(a,"c")==0)
+        {valid=1;
+        }
 
     }
 }
+
+void userinformation(char * IDU){
+    char ID[20],name[15],gender[15],phone[15],mailbox[15],pass[15],address[15],Balance[15];
+    char IDF[55];
+    char file[]=".txt";
+    char phantom;
+    char a[2];
+    int valida=0,valid=1;
+    FILE *infile;
+    strcpy(IDF, IDU);
+    strcat(IDF, file);
+    infile=fopen(IDF,"r");
+    if (infile!=NULL) {
+        printf("system error\n");
+        exit(1);
+    }
+    fscanf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
+    fclose(infile);
+    while(valida==0)
+    {
+        printf("(a)View personal information\n");
+        printf("(b)Modify Personal Information\n");
+        printf("(c)Return\n");
+        scanf("%s",a);
+        scanf("%c",&phantom);
+        if(strcmp(a,"a")==0)
+        {printf("%s %s %s %s %s %s %s %5s",ID,name,gender,phone,pass,mailbox,address,Balance);
+        }
+        else if(strcmp(a,"b")==0)
+        {
+            printf("Name\n");
+            scanf("%s",name);
+            while (valid==1) {
+                printf("Gender\n");
+                printf("Please choose a man or a lady\n");
+                scanf("%s",gender);
+                scanf("%c",&phantom);
+                if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {
+                    valid=0;
+                }
+                if(valid==0&&phantom==' '){
+                    valid=1;
+                }
+            }
+            while(valid==0){
+                printf("Phone\n");
+                printf("The telephone number should be 11 digits\n");
+                scanf("%s",phone);
+                scanf("%c",&phantom);
+                valid=1;
+                if(strlen(phone)!=11){
+                    valid=0;
+                }
+                for(int k=0;k<11&&valid==1;k++) {
+                    if(isdigit(phone[k])==0){
+                        valid=0;
+                    }
+                }
+                if(valid==1&&phantom==' '){
+                    valid=0;
+                }
+            }
+            printf("Password\n");
+            scanf("%s",pass);
+            while(valid==1){
+                printf("Mailbox\n");
+                printf("The correct format is ***@***.***\n");
+                scanf("%s",mailbox);
+                scanf("%c",&phantom);
+                valid=0;
+                if(strlen(mailbox)!=11){
+                    valid=1;
+                }
+                for(int k=0;k<3&&valid==0;k++) {
+                    if(isalpha(mailbox[k])==0){
+                        valid=1;
+                    }
+                }
+                if(valid==0 && mailbox[3]!='@'){
+                    valid=1;
+                }
+                for(int k=4;k<7&&valid==0;k++) {
+                    if(isalpha(mailbox[k])==0){
+                        valid=1;
+                    }
+                }
+                if(mailbox[7]!='.'&&valid==0){
+                    valid=1;
+                }
+                for(int k=8;k<11&&valid==0;k++) {
+                    if(isalpha(mailbox[k])==0){
+                        valid=1;
+                    }
+                }
+                if(valid==0&&phantom==' '){
+                    valid=1;
+                }
+            }
+            printf("Address\n");
+            scanf("%s",address);
+            infile=fopen(IDF,"a+" );
+            if(infile==NULL){
+                printf("system error\n");
+                exit(1);
+            }
+            fprintf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
+            fclose(infile);
+        }
+        else if(strcmp(a,"c")==0)
+        {valida=1;
+        }
+    }
+
+}
+
+
+void administratorinformation(char * IDU){
+    char ID[20],name[15],gender[15],phone[15],mailbox[15],pass[15],address[15],Balance[15];
+    char IDF[55];
+    char file[]=".txt";
+    char phantom;
+    char a[2];
+    int valida=0,valid=1;
+    FILE *infile;
+    strcpy(IDF, IDU);
+    strcat(IDF, file);
+    infile=fopen(IDF,"r");
+    if (infile!=NULL) {
+        printf("system error\n");
+        exit(1);
+    }
+    fscanf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
+    fclose(infile);
+    while(valida==0)
+    {
+        printf("(a)View personal information\n");
+        printf("(b)Modify Personal Information\n");
+        printf("(c)Return\n");
+        scanf("%s",a);
+        scanf("%c",&phantom);
+        if(strcmp(a,"a")==0)
+        {printf("%s %s %s %s %s %s %s %5s",ID,name,gender,phone,pass,mailbox,address,Balance);
+        }
+        else if(strcmp(a,"b")==0)
+        {
+            printf("Name\n");
+            scanf("%s",name);
+            while (valid==1) {
+                printf("Gender\n");
+                printf("Please choose a man or a lady\n");
+                scanf("%s",gender);
+                scanf("%c",&phantom);
+                if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {
+                    valid=0;
+                }
+                if(valid==0&&phantom==' '){
+                    valid=1;
+                }
+            }
+            while(valid==0){
+                printf("Phone\n");
+                printf("The telephone number should be 11 digits\n");
+                scanf("%s",phone);
+                scanf("%c",&phantom);
+                valid=1;
+                if(strlen(phone)!=11){
+                    valid=0;
+                }
+                for(int k=0;k<11&&valid==1;k++) {
+                    if(isdigit(phone[k])==0){
+                        valid=0;
+                    }
+                }
+                if(valid==1&&phantom==' '){
+                    valid=0;
+                }
+            }
+            printf("Password\n");
+            scanf("%s",pass);
+            while(valid==1){
+                printf("Mailbox\n");
+                printf("The correct format is ***@***.***\n");
+                scanf("%s",mailbox);
+                scanf("%c",&phantom);
+                valid=0;
+                if(strlen(mailbox)!=11){
+                    valid=1;
+                }
+                for(int k=0;k<3&&valid==0;k++) {
+                    if(isalpha(mailbox[k])==0){
+                        valid=1;
+                    }
+                }
+                if(valid==0 && mailbox[3]!='@'){
+                    valid=1;
+                }
+                for(int k=4;k<7&&valid==0;k++) {
+                    if(isalpha(mailbox[k])==0){
+                        valid=1;
+                    }
+                }
+                if(mailbox[7]!='.'&&valid==0){
+                    valid=1;
+                }
+                for(int k=8;k<11&&valid==0;k++) {
+                    if(isalpha(mailbox[k])==0){
+                        valid=1;
+                    }
+                }
+                if(valid==0&&phantom==' '){
+                    valid=1;
+                }
+            }
+            printf("Address\n");
+            scanf("%s",address);
+            infile=fopen(IDF,"a+" );
+            if(infile==NULL){
+                printf("system error\n");
+                exit(1);
+            }
+            fprintf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
+            fclose(infile);
+        }
+        else if(strcmp(a,"c")==0)
+        {valida=1;
+        }
+    }
+    
+}
+
+
 
 
 void goodsadd(){
@@ -669,7 +924,7 @@ void goodsadd(){
         if(valid==1&&phantom==' '){
             valid=0;
         }
-        infile=fopen("goods.txt","w");
+        infile=fopen("goods.txt","r");
         if(infile==NULL){
             printf("system error\n");
             exit(1);
@@ -815,6 +1070,9 @@ void goodsadd(){
         }
         if(valid==0&&strlen(discountrate)!=5){
             valid=1;
+        }
+        if(strcmp(discountrate,"100.00%")==0){
+            valid=0;
         }
         if(valid==0&&phantom==' '){
             valid=1;
@@ -998,6 +1256,9 @@ void goodsadd(){
         }
         if(valid==1&&strlen(discountstarttime)!=16){
             valid=0;
+        }
+        if(strcmp(discountstarttime,"0000:00:00:00:00")==0){
+            valid=1;
         }
         if(valid==1&&phantom==' '){
             valid=0;
@@ -1185,6 +1446,9 @@ void goodsadd(){
         }
         if(valid==0&&strlen(discountendtime)!=16){
             valid=1;
+        }
+        if(strcmp(discountendtime,"0000:00:00:00:00")==0){
+            valid=0;
         }
         if(valid==0&&phantom==' '){
             valid=1;
@@ -1435,6 +1699,7 @@ void Recharge(char * IDU){
     char IDF[20];
     char phantom;
     char a[2];
+    double balancea;
     strcpy(IDF, IDU);
     strcat(IDF, file);
     infile=fopen(IDF,"r");
@@ -1443,6 +1708,8 @@ void Recharge(char * IDU){
     }
     fscanf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
     fclose(infile);
+    printf("The balance of your account is %5s\n",Balance);
+    balancea=(atof(Balance));
     printf("Please choose the amount of recharge\n");
     printf("(a)1\n");
     printf("(b)5\n");
@@ -1452,19 +1719,24 @@ void Recharge(char * IDU){
     scanf("%s",a);
     scanf("%c",&phantom);
     if(strcmp(a,"a")==0)
-    {strcpy(Balance,"1.00");
+    {balancea=balancea+1;
+    sprintf( Balance, "%f", balancea );
     }
     else if(strcmp(a,"b")==0)
-    {strcpy(Balance,"5.00");
+    {balancea=balancea+5;
+    sprintf( Balance, "%f", balancea );
     }
     else if(strcmp(a,"c")==0)
-    {strcpy(Balance,"50.00");
+    {balancea=balancea+50;
+    sprintf( Balance, "%f", balancea );
     }
     else if(strcmp(a,"d")==0)
-    {strcpy(Balance,"100.00");
+    {balancea=balancea+100;
+    sprintf( Balance, "%f", balancea );
     }
     else if(strcmp(a,"e")==0)
-    {strcpy(Balance,"500.00");
+    {balancea=balancea+500;
+    sprintf( Balance, "%f", balancea );
     }
     else{
         printf("Illegal input\n");
@@ -1473,7 +1745,7 @@ void Recharge(char * IDU){
     printf("Enter the code\n");
     scanf("%s",code);
     scanf("%c",&phantom);
-    if(strcmp(code,"kingwang")==0){
+    if(strcmp(code,pass)==0){
         infile=fopen(IDF,"w");
         if(infile==NULL){
             printf("system error\n");
@@ -1506,10 +1778,10 @@ void purchase(char * IDU){
         printf("(b)Settlement\n");
         scanf("%s",a);
         scanf("%c",&phantom);
-        if(a[0]=='a')
+        if(strcmp(a,"a")==0)
         {valid=0;
         }
-        else if(a[0]=='b')
+        else if(strcmp(a,"b")==0)
         {  validb=2;
            valid=1;
         }
@@ -1652,7 +1924,7 @@ void purchase(char * IDU){
     if (infile==NULL) {
         exit(1);
     }
-    fprintf(infile,"%s %s %s %s %s %s %s %5s",ID,name,gender,phone,pass,mailbox,address,Balance);
+    fprintf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
     fclose(infile);
     infile=fopen("goods.txt","r");
     if(infile==NULL){
