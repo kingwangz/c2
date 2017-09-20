@@ -1723,7 +1723,7 @@ void purchase(char * IDU){
 
 
 char * timeas(){
-    char timea[550];
+    char timea[551];
     static char Local[55];
     time_t timer;
     struct tm *tblock;
@@ -1793,5 +1793,4 @@ char * timeas(){
     Local[14]=timea[14];
     Local[15]=timea[15];
     return Local;
-    
 }
