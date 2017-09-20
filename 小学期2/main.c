@@ -44,7 +44,8 @@ int main() {
     //goodsadd();
     //scanf("%s",commoditytype);
     //Commoditysearch(commoditytype,1, 4);
-    Recharge(ID);
+    //Recharge(ID);
+    purchase(ID);
     return 0;
 }
 
@@ -107,6 +108,7 @@ void personal(){
             printf("ID already exists, please re-enter\n");
             valid=0;
         }
+        fclose(infile);
         if(valid==1&&phantom==' '){
             valid=0;
         }
@@ -667,7 +669,7 @@ void goodsadd(){
         if(valid==1&&phantom==' '){
             valid=0;
         }
-        infile=fopen("goods.txt","r");
+        infile=fopen("goods.txt","w");
         if(infile==NULL){
             printf("system error\n");
             exit(1);
@@ -727,7 +729,7 @@ void goodsadd(){
         if(valid==1&&retailprice[k]!='.'){
             valid=0;
         }
-        if(valid==1&&isdigit(retailprice[k+1])==0&&isdigit(retailprice[k+2])==0){
+        if(valid==1&&(isdigit(retailprice[k+1])==0||isdigit(retailprice[k+2])==0)){
             valid=0;
         }
         if(valid==1&&strlen(retailprice)!=k+3){
@@ -758,7 +760,7 @@ void goodsadd(){
         if(valid==0&&purchaseprice[k]!='.'){
             valid=1;
         }
-        if(valid==0&&isdigit(purchaseprice[k+1])==0&&isdigit(purchaseprice[k+2])==0){
+        if(valid==0&&(isdigit(purchaseprice[k+1])==0||isdigit(purchaseprice[k+2])==0)){
             valid=1;
         }
         if(valid==0&&strlen(purchaseprice)!=k+3){
@@ -1487,13 +1489,13 @@ void Recharge(char * IDU){
 }
 
 void purchase(char * IDU){
-    char Commoditynumber[20],marketname[15],discountstarttime[55],discountendtime[55],commoditytype[15],brand[15],retailprice[15],purchaseprice[55],inventory[55],inventoryb[55],discountrate[55],Commoditynumberb[20],Sales[55],code[55],Ordernumber[55];
+    char Commoditynumber[20],marketname[15],discountstarttime[55],discountendtime[55],commoditytype[15],brand[15],retailprice[15],purchaseprice[55],inventory[55],inventoryb[55],inventoryd[55],discountrate[55],Commoditynumberb[20],Sales[55],code[55],Ordernumber[55];
     char ID[20],name[15],gender[15],phone[15],mailbox[15],pass[15],address[15],Balance[15],a[2];
-    char Commoditynumbere[500][20],marketnamee[500][15],discountstarttimee[500][55],discountendtimee[500][55],commoditytypee[500][15],brande[500][15],retailpricee[500][15],retailpricef[500][15],purchasepricee[500][15],inventorye[500][15],discountratee[500][15],Salese[500][55];
+    char Commoditynumbere[500][20],marketnamee[500][15],discountstarttimee[500][55],discountendtimee[500][55],commoditytypee[500][15],brande[500][15],retailpricee[500][15],retailpricef[500][15],purchasepricee[500][15],inventorye[500][15],discountratee[500][15],Salese[500][55],inventoryh[500][55];
     char Commoditynumberf[500][20],marketnamef[500][15],discountstarttimef[500][55],discountendtimef[500][55],commoditytypef[500][15],brandf[500][15],retailpriceg[500][15],purchasepricef[500][15],inventoryf[500][15],discountratef[500][15],Salesf[500][55];
     char * Local;
     char * Locala;
-    int valid=1,validb=0,k=0,g=0,inventorya=0,inventoryc = 0,Salesa;
+    int valid=1,validb=0,validc=0,k=0,g=0,inventorya=0,inventoryc = 0,Salesa;
     double balancea,retailpricea,retailpriceb=0,discountratea;
     char phantom;
     char file[]=".txt";
@@ -1508,7 +1510,8 @@ void purchase(char * IDU){
         {valid=0;
         }
         else if(a[0]=='b')
-        {validb=2;
+        {  validb=2;
+           valid=1;
         }
         while (valid==0) {
             printf("Please enter the goods number\n");
@@ -1562,24 +1565,28 @@ void purchase(char * IDU){
                 }
                 while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s %s",Commoditynumberb,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime,Sales)!=EOF){
                     if(valid==1&&strcmp(Commoditynumber, Commoditynumberb)==0){
+                        fclose(infile);
+                        validc=1;
                         break;
                     }
-                    else{
-                        printf("Goods do not exist\n");
-                        break;
-                    }
+                    
+                    
                 }
-                fclose(infile);
+                if(validc==0){
+                    printf("Goods do not exist\n");
+                    break;
+                }
             }
             if(valid==1){
                 inventorya=(atoi(inventory));
                 inventoryc=(atoi(inventoryb));
                 if(inventorya<inventoryc){
                     printf("Inventory shortage\n");
-                    valid=0;
+                    break;
                 }
             }
         }
+        if(validb!=2){
         strcpy(IDF, IDU);
         strcat(IDF, file);
         infile=fopen(IDF,"r");
@@ -1593,6 +1600,8 @@ void purchase(char * IDU){
         Salesa=(atoi(Sales));
         Salesa=Salesa+inventoryc;
         sprintf( Sales, "%d", Salesa );
+        sprintf( inventoryd, "%d", inventoryc );
+
         strcpy(Commoditynumbere[k],Commoditynumberb);
         strcpy(marketnamee[k],marketname);
         strcpy(commoditytypee[k],commoditytype);
@@ -1604,11 +1613,13 @@ void purchase(char * IDU){
         strcpy(discountstarttimee[k],discountstarttime);
         strcpy(discountendtimee[k],discountendtime);
         strcpy(Salese[k],Sales);
+        strcpy(inventoryh[k],inventoryd);
+        
         
         Local=timeas();
         if(strcmp(Local,discountstarttime)>0&&strcmp(Local,discountendtime)<0){
             retailpricea=(atof(retailprice));
-            discountratea=(atof(discountrate));
+            discountratea=(atof(discountrate)/100);
             retailpricea=retailpricea*discountratea;
         }
         else{
@@ -1617,7 +1628,7 @@ void purchase(char * IDU){
         sprintf( retailpricef[k], "%f", retailpricea );
         k++;
     }
-    
+    }
     printf("Enter the code\n");
     scanf("%s",code);
     scanf("%c",&phantom);
@@ -1626,9 +1637,9 @@ void purchase(char * IDU){
         return;
     }
     for(int i=0;i<k;i++){
-        retailpriceb+=(atof(retailpricef[k]));
+        retailpriceb=retailpriceb+(atof(retailpricef[i]));
     }
-     balancea=(atof(Balance));
+    balancea=(atof(Balance));
     if(balancea<retailpriceb){
         printf("Insufficient balance, please recharge\n");
         return;
@@ -1641,7 +1652,7 @@ void purchase(char * IDU){
     if (infile==NULL) {
         exit(1);
     }
-    fprintf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
+    fprintf(infile,"%s %s %s %s %s %s %s %5s",ID,name,gender,phone,pass,mailbox,address,Balance);
     fclose(infile);
     infile=fopen("goods.txt","r");
     if(infile==NULL){
@@ -1664,17 +1675,19 @@ void purchase(char * IDU){
     }
     fclose(infile);
     for(int i=0;i<k;i++){
-        if(strcmp(Commoditynumbere[i],Commoditynumberf[i])==0){
-            strcpy(marketnamef[i],marketnamee[i]);
-            strcpy(commoditytypef[i],commoditytypee[i]);
-            strcpy(brandf[i],brande[i]);
-            strcpy(retailpriceg[i],retailpricee[i]);
-            strcpy(purchasepricef[i],purchasepricee[i]);
-            strcpy(inventoryf[i],inventorye[i]);
-            strcpy(discountratef[i],discountratee[i]);
-            strcpy(discountstarttimef[i],discountstarttimee[i]);
-            strcpy(discountendtimef[i],discountendtimee[i]);
-            strcpy(Salesf[i],Salese[i]);
+        for(int l=0;l<g;l++){
+        if(strcmp(Commoditynumberf[l],Commoditynumbere[i])==0){
+            strcpy(marketnamef[l],marketnamee[i]);
+            strcpy(commoditytypef[l],commoditytypee[i]);
+            strcpy(brandf[l],brande[i]);
+            strcpy(retailpriceg[l],retailpricee[i]);
+            strcpy(purchasepricef[l],purchasepricee[i]);
+            strcpy(inventoryf[l],inventorye[i]);
+            strcpy(discountratef[l],discountratee[i]);
+            strcpy(discountstarttimef[l],discountstarttimee[i]);
+            strcpy(discountendtimef[l],discountendtimee[i]);
+            strcpy(Salesf[l],Salese[i]);
+        }
         }
     }
     infile=fopen("goods.txt","w");
@@ -1683,21 +1696,23 @@ void purchase(char * IDU){
             exit(1);
         }
     for(int i=0;i<g;i++){
-        fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s\n",Commoditynumbere[i],marketnamef[i],commoditytypef[i],brandf[i],retailpriceg[i],purchasepricef[i],inventoryf[i],discountratef[i],discountstarttimef[i],discountendtimef[i],Salesf[i]);
+        fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s\n",Commoditynumberf[i],marketnamef[i],commoditytypef[i],brandf[i],retailpriceg[i],purchasepricef[i],inventoryf[i],discountratef[i],discountstarttimef[i],discountendtimef[i],Salesf[i]);
         }
     fclose(infile);
     infile=fopen("Order.txt","a+");
     for(int i=0;i<k;i++){
         if(strcmp(marketnamef[0],marketnamef[i])==0){
+            strcpy(Ordernumber," ");
             strcat(Ordernumber, ID);
             strcat(Ordernumber, Local);
-            fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumbere[i],marketnamef[i],commoditytypef[i],brandf[i],retailpriceg[i],purchasepricef[i],inventoryf[i],discountratef[i],discountstarttimef[i],discountendtimef[i],Salesf[i]);
+            fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumbere[i],marketnamee[i],commoditytypee[i],brande[i],retailpricee[i],purchasepricee[i],inventorye[i],discountratee[i],discountstarttimee[i],discountendtimee[i],Salese[i],inventoryh[i]);
         }
         else{
             Locala=timeas();
+            strcpy(Ordernumber," ");
             strcat(Ordernumber, ID);
             strcat(Ordernumber, Locala);
-            fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumbere[i],marketnamef[i],commoditytypef[i],brandf[i],retailpriceg[i],purchasepricef[i],inventoryf[i],discountratef[i],discountstarttimef[i],discountendtimef[i],Salesf[i]);
+            fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumbere[i],marketnamee[i],commoditytypee[i],brande[i],retailpricee[i],purchasepricee[i],inventorye[i],discountratee[i],discountstarttimee[i],discountendtimee[i],Salese[i],inventoryh[i]);
         }
         
         
@@ -1714,7 +1729,6 @@ char * timeas(){
     struct tm *tblock;
     timer=time(NULL);
     tblock=localtime(&timer);
-    printf("Local time is: %s",asctime(tblock));
     strcpy(timea, asctime(tblock));
     if(timea[4]=='J'&&timea[5]=='a'&&timea[6]=='n'){
         Local[5]='0';
@@ -1778,6 +1792,5 @@ char * timeas(){
     Local[13]=':';
     Local[14]=timea[14];
     Local[15]=timea[15];
-    printf("%s\n",Local);
     return Local;
 }
