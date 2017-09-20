@@ -27,9 +27,10 @@ void goodsadd();
 void Commoditysearch(char *,int,int);
 void goodsinquiries(char *);
 void recommendation(char *);
+void goodsmanagement(char *);
 void userinformation(char *);
 void administratorinformation(char *);
-void Order();
+void Order(char *);
 void Recharge(char *);
 void purchase(char *);
 char * timeas();
@@ -492,7 +493,7 @@ void userinterface(char * ID){
         {userinformation(ID);
         }
         else if(strcmp(a,"d")==0)
-        {//Order();
+        {Order(ID);
         }
         else if(strcmp(a,"e")==0)
         {Recharge(ID);
@@ -513,7 +514,7 @@ void administratorinterface(char * ID){
     while(valid==0)
     {
         printf("(a)Order management\n");
-        printf("(b)Flight Management\n");
+        printf("(b)goods management\n");
         printf("(c)Personal information\n");
         printf("(d)Return\n");
         scanf("%s",a);
@@ -522,7 +523,7 @@ void administratorinterface(char * ID){
         {//ordermanagement();
         }
         else if(strcmp(a,"b")==0)
-        {//flightmanagement();
+        {goodsmanagement(ID);
         }
         else if(strcmp(a,"c")==0)
         {administratorinformation(ID);
@@ -663,8 +664,41 @@ void recommendation(char * ID){
         else if(strcmp(a,"c")==0)
         {valid=1;
         }
-
     }
+}
+
+void goodsmanagement(char * ID){
+    char IDA[20],name[15],gender[15],phone[15],pass[15],mailbox[15],supermarket[15];
+    char phantom;
+    char a[2];
+    int valid=0;
+    char IDF[55];
+    char file[]="a.txt";
+    FILE *infile;
+    strcpy(IDF, ID);
+    strcat(IDF, file);
+    infile=fopen(IDF,"r");
+    if (infile!=NULL) {
+        printf("system error\n");
+        exit(1);
+    }
+    fscanf(infile,"%s %s %s %s %s %s %s",IDA,name,gender,phone,pass,mailbox,supermarket);
+    fclose(infile);
+    while(valid==0)
+    {
+        printf("(a)All goods\n");
+        printf("(b)Return\n");
+        scanf("%s",a);
+        scanf("%c",&phantom);
+        if(strcmp(a,"a")==0)
+        {Commoditysearch(supermarket,2, 2);
+        }
+        else if(strcmp(a,"b")==0)
+        {valid=1;
+        }
+        
+    }
+
 }
 
 void userinformation(char * IDU){
@@ -766,7 +800,7 @@ void userinformation(char * IDU){
             }
             printf("Address\n");
             scanf("%s",address);
-            infile=fopen(IDF,"a+" );
+            infile=fopen(IDF,"w" );
             if(infile==NULL){
                 printf("system error\n");
                 exit(1);
@@ -783,9 +817,9 @@ void userinformation(char * IDU){
 
 
 void administratorinformation(char * IDU){
-    char ID[20],name[15],gender[15],phone[15],mailbox[15],pass[15],address[15],Balance[15];
+    char IDA[20],name[15],gender[15],phone[15],pass[15],mailbox[15],supermarket[15];
     char IDF[55];
-    char file[]=".txt";
+    char file[]="a.txt";
     char phantom;
     char a[2];
     int valida=0,valid=1;
@@ -797,7 +831,7 @@ void administratorinformation(char * IDU){
         printf("system error\n");
         exit(1);
     }
-    fscanf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
+    fscanf(infile,"%s %s %s %s %s %s %s",IDA,name,gender,phone,pass,mailbox,supermarket);
     fclose(infile);
     while(valida==0)
     {
@@ -807,7 +841,7 @@ void administratorinformation(char * IDU){
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
-        {printf("%s %s %s %s %s %s %s %5s",ID,name,gender,phone,pass,mailbox,address,Balance);
+        {printf("%s %s %s %s %s %s %s",IDA,name,gender,phone,pass,mailbox,supermarket);
         }
         else if(strcmp(a,"b")==0)
         {
@@ -879,14 +913,12 @@ void administratorinformation(char * IDU){
                     valid=1;
                 }
             }
-            printf("Address\n");
-            scanf("%s",address);
-            infile=fopen(IDF,"a+" );
+            infile=fopen(IDF,"w" );
             if(infile==NULL){
                 printf("system error\n");
                 exit(1);
             }
-            fprintf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
+            fprintf(infile,"%s %s %s %s %s %s %s",IDA,name,gender,phone,pass,mailbox,supermarket);
             fclose(infile);
         }
         else if(strcmp(a,"c")==0)
@@ -1993,6 +2025,46 @@ void purchase(char * IDU){
 }
 
 
+
+void Order(char * ID){
+    char Commoditynumber[20],marketname[15],discountstarttime[55],discountendtime[55],commoditytype[15],brand[15],retailprice[15],purchaseprice[55],inventory[55],inventoryb[55],discountrate[55],Sales[55],Ordernumber[55];
+    char Commoditynumbera[500][20],marketnamea[500][15],discountstarttimea[500][55],discountendtimea[500][55],commoditytypea[500][15],branda[500][15],retailpricea[500][15],purchasepricea[500][55],inventorya[500][55],inventoryba[500][55],discountratea[500][55],Salesa[500][55],Ordernumbera[500][55];
+    char Comparison[55],Comparisonb[55];
+    int k=0;
+    FILE *infile;
+    infile=fopen("Order.txt","r");
+    strcpy(Comparison," ");
+    strcat(Comparison, ID);
+    while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumber,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime,Sales,inventoryb)!=EOF){
+        Comparisonb[0]=Ordernumber[0];
+        Comparisonb[1]=Ordernumber[1];
+        Comparisonb[2]=Ordernumber[2];
+        Comparisonb[3]=Ordernumber[3];
+        Comparisonb[4]=Ordernumber[4];
+        Comparisonb[5]=Ordernumber[5];
+        Comparisonb[6]=Ordernumber[6];
+        if(strcmp(Comparisonb,Comparison)==0){
+            strcpy(Commoditynumbera[k],Commoditynumber);
+            strcpy(marketnamea[k],marketname);
+            strcpy(commoditytypea[k],commoditytype);
+            strcpy(branda[k],brand);
+            strcpy(retailpricea[k],retailprice);
+            strcpy(purchasepricea[k],purchaseprice);
+            strcpy(inventorya[k],inventory);
+            strcpy(discountratea[k],discountrate);
+            strcpy(discountstarttimea[k],discountstarttime);
+            strcpy(discountendtimea[k],discountendtime);
+            strcpy(Salesa[k],Sales);
+            strcpy(Ordernumbera[k],Ordernumber);
+            strcpy(inventoryba[k],inventoryb);
+            k++;
+        }
+        for (int g=0; g<k; g++) {
+            printf("%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
+        }
+
+    }
+}
 
 char * timeas(){
     char timea[551];
