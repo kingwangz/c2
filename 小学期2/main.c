@@ -13,30 +13,30 @@
 #include <math.h>
 #include<time.h>
 
-void registered();
-void personal();
-void administrator();
-void logins();
-void userlogin();
-void administratorlogin();
-char * userIDverification(char *);
-char * administratorIDverification(char *);
-void userinterface(char *);
-void administratorinterface(char *);
-void goodsadd(char *);
-void Commoditysearch(char *,int,int);
-void goodsinquiries(char *);
-void recommendation(char *);
-void goodsmanagement(char *);
-void userinformation(char *);
-void administratorinformation(char *);
-void Order(char *);
-void ordermanagement(char *,int);
-void Recharge(char *);
-void purchase(char *);
-char * timeas();
+void registered();//注册主函数
+void personal();//用户注册界面
+void administrator();//管理员注册界面
+void logins();//登录主函数
+void userlogin();//用户登录界面
+void administratorlogin();//管理员登录界面
+char * userIDverification(char *);//验证用户ID和密码是否匹配
+char * administratorIDverification(char *);//验证管理员ID和密码是否匹配
+void userinterface(char *);//用户界面
+void administratorinterface(char *);//管理员界面
+void goodsadd(char *);//商品添加
+void Commoditysearch(char *,int,int);//商品查找
+void goodsinquiries(char *);//用户商品查找界面
+void recommendation(char *);//热门推荐
+void goodsmanagement(char *);//商品管理界面
+void userinformation(char *);//用户修改信息界面
+void administratorinformation(char *);//管理员修改信息界面
+void Order(char *);//用户订单查找
+void ordermanagement(char *,int);//管理员订单查找
+void Recharge(char *);//充值界面
+void purchase(char *);//购买界面
+char * timeas();//获取标准格式的当地时间
 
-int main() {
+int main() {//主程序
     char phantom;
     char a[2];
     int valid=0;
@@ -46,14 +46,14 @@ int main() {
         printf("(b)Logins\n");
         printf("(c)Exit\n");
         scanf("%s",a);
-        scanf("%c",&phantom);
-        if(strcmp(a,"a")==0)
+        scanf("%c",&phantom);//验证幻影符
+        if(strcmp(a,"a")==0)//选择注册界面
         {registered();
         }
-        else if(strcmp(a,"b")==0)
+        else if(strcmp(a,"b")==0)//选择登录界面
         {logins();
         }
-        else if(strcmp(a,"c")==0)
+        else if(strcmp(a,"c")==0)//退出系统
         {valid=1;
         }
     }
@@ -73,7 +73,7 @@ void registered(){
         printf("(b)Administrator registration\n");
         printf("(c)	Return\n");
         scanf("%s",a);
-        scanf("%c",&phantom);
+        scanf("%c",&phantom);//验证幻影符
         if(strcmp(a,"a")==0)
         {personal();
         }
@@ -81,7 +81,7 @@ void registered(){
         {   printf("Enter the administrator invitation code\n");
             scanf("%s",code);
             scanf("%c",&phantom);
-            if(strcmp(code,"kingwang")==0){
+            if(strcmp(code,"kingwang")==0){//进行管理码验证
                 administrator();
             }
             else{
@@ -98,10 +98,10 @@ void personal(){
     char ID[20],name[15],gender[15],phone[15],pass[15],mailbox[15],IDF[15],address[15],Balance[15];
     int valid=0;
     char phantom;
-    strcpy(Balance,"0.00");
+    strcpy(Balance,"0.00");//初始化账户余额
     char file[]=".txt";
     FILE *infile;
-    while(valid==0){
+    while(valid==0){//进行ID输入的容错机制
         printf("User ID\n");
         printf("Length 6-10 characters\n");
         scanf("%s",ID);
@@ -109,26 +109,27 @@ void personal(){
         if(strlen(ID)>5&&strlen(ID)<11){
             valid=1;
         }
-        for(int k=0;k<11&&valid==1;k++) {
+        for(int k=0;k<11&&valid==1;k++) {//验证输入是否为字母
             if(ispunct(ID[k])!=0){
+                printf("The input must be a letter\n");
                 valid=0;
             }
         }
         strcpy(IDF, ID);
         strcat(IDF, file);
         infile=fopen(IDF,"r");
-        if (valid==1&&infile!=NULL) {
+        if (valid==1&&infile!=NULL) {//使同一ID只能出现一次
             printf("ID already exists, please re-enter\n");
             valid=0;
         }
         fclose(infile);
-        if(valid==1&&phantom==' '){
+        if(valid==1&&phantom==' '){//防止scanf不能识别空格
             valid=0;
         }
     }
     printf("Name\n");
     scanf("%s",name);
-    while (valid==1) {
+    while (valid==1) {//进行性别输入的容错机制
         printf("Gender\n");
         printf("Please choose a man or a lady\n");
         scanf("%s",gender);
@@ -140,7 +141,7 @@ void personal(){
             valid=1;
         }
     }
-    while(valid==0){
+    while(valid==0){//进行电话输入的容错机制
         printf("Phone\n");
         printf("The telephone number should be 11 digits\n");
         scanf("%s",phone);
@@ -149,19 +150,20 @@ void personal(){
         if(strlen(phone)!=11){
             valid=0;
         }
-        for(int k=0;k<11&&valid==1;k++) {
+        for(int k=0;k<11&&valid==1;k++) {//验证输入是否为数字
             if(isdigit(phone[k])==0){
+                printf("The input must be a number\n");
                 valid=0;
             }
         }
-        if(valid==1&&phantom==' '){
+        if(valid==1&&phantom==' '){//防止scanf不能识别空格
             valid=0;
         }
     }
     printf("Password\n");
     scanf("%s",pass);
     while(valid==1){
-        printf("Mailbox\n");
+        printf("Mailbox\n");//进行邮箱输入的容错机制
         printf("The correct format is ***@***.***\n");
         scanf("%s",mailbox);
         scanf("%c",&phantom);
@@ -190,7 +192,7 @@ void personal(){
                 valid=1;
             }
         }
-        if(valid==0&&phantom==' '){
+        if(valid==0&&phantom==' '){//防止scanf不能识别空格
             valid=1;
         }
     }
@@ -200,13 +202,13 @@ void personal(){
     strcpy(IDF, ID);
     strcat(IDF, file);
     infile=fopen(IDF,"a+" );
-    if(infile==NULL){
+    if(infile==NULL){//防止文件不能被打开
         printf("system error\n");
         exit(1);
     }
     fprintf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
-    fclose(infile);
-    Recharge(ID);
+    fclose(infile);//关闭文件
+    Recharge(ID);//进行余额充值
 }
 
 
@@ -217,7 +219,7 @@ void administrator(){
     char phantom;
     char file[]="a.txt";
     FILE *infile;
-    while(valid==0){
+    while(valid==0){//进行ID输入的容错机制
         printf("Administrator ID\n");
         printf("Length 6-10 characters\n");
         scanf("%s",IDA);
@@ -225,19 +227,20 @@ void administrator(){
         if(strlen(IDA)>5&&strlen(IDA)<11){
             valid=1;
         }
-        for(int k=0; k<11 && valid==1 ;k++) {
+        for(int k=0; k<11 && valid==1 ;k++) {//验证输入是否为字母
             if(ispunct(IDA[k])!=0){
+                printf("The input must be a letter\n");
                 valid=0;
             }
         }
         strcpy(IDF, IDA);
         strcat(IDF, file);
         infile=fopen(IDF,"r");
-        if (valid==1&&infile!=NULL) {
+        if (valid==1&&infile!=NULL) {//使同一ID只能出现一次
             printf("ID already exists, please re-enter\n");
             valid=0;
         }
-        if(valid==1&&phantom==' '){
+        if(valid==1&&phantom==' '){//防止scanf不能识别空格
             valid=0;
         }
     }
@@ -251,11 +254,11 @@ void administrator(){
         if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {
             valid=0;
         }
-        if(valid==0&&phantom==' '){
+        if(valid==0&&phantom==' '){//防止scanf不能识别空格
             valid=1;
         }
     }
-    while(valid==0){
+    while(valid==0){//进行电话输入的容错机制
         printf("Phone\n");
         printf("The telephone number should be 11 digits\n");
         scanf("%s",phone);
@@ -264,18 +267,19 @@ void administrator(){
         if(strlen(phone)!=11){
             valid=0;
         }
-        for(int k=0;k<11&&valid==1;k++) {
+        for(int k=0;k<11&&valid==1;k++) {//验证输入是否为数字
             if(isdigit(phone[k])==0){
+                printf("The input must be a number\n");
                 valid=0;
             }
         }
-        if(valid==1&&phantom==' '){
+        if(valid==1&&phantom==' '){//防止scanf不能识别空格
             valid=0;
         }
     }
     printf("Password\n");
     scanf("%s",pass);
-    while(valid==1){
+    while(valid==1){//进行邮箱输入的容错机制
         printf("Mailbox\n");
         printf("The correct format is ***@***.***\n");
         scanf("%s",mailbox);
@@ -309,7 +313,7 @@ void administrator(){
             valid=1;
         }
     }
-    while (valid==0) {
+    while (valid==0) {//进行超市输入的容错机制
         printf("Supermarket\n");
         printf("Currently supports the top ten supermarket nationwide\n");
         scanf("%s",supermarket);
@@ -334,12 +338,12 @@ void administrator(){
     strcpy(IDF, IDA);
     strcat(IDF, file);
     infile=fopen(IDF,"a+" );
-    if(infile==NULL){
+    if(infile==NULL){//防止文件不能被打开
         printf("system error\n");
         exit(1);
     }
     fprintf(infile,"%s %s %s %s %s %s %s",IDA,name,gender,phone,pass,mailbox,supermarket);
-    fclose(infile);
+    fclose(infile);//关闭文件
 }
 
 
@@ -375,7 +379,7 @@ void userlogin(){
     char * IDpassword;
     printf("Please enter the user ID\n");
     scanf("%s",ID);
-    IDpassword=userIDverification(ID);
+    IDpassword=userIDverification(ID);//验证用户密码是否正确
     if(strcmp(IDpassword, "h")==0){
         printf("The user does not exist, please register.\n");
     }
@@ -387,7 +391,7 @@ void userlogin(){
         scanf("%s",password);
         if(strcmp(IDpassword,password)==0){
             printf("Welcome back!\n");
-            userinterface(ID);
+            userinterface(ID);//登录用户界面
         }
         else{
             printf("Password is wrong, please try again.\n");
@@ -403,7 +407,7 @@ void administratorlogin(){
     char * IDpassword;
     printf("Please enter the administrator ID\n");
     scanf("%s",ID);
-    IDpassword=administratorIDverification(ID);
+    IDpassword=administratorIDverification(ID);//验证管理员密码是否正确
     if(strcmp(IDpassword, "h")==0){
         printf("The administrator does not exist, please register.\n");
     }
@@ -415,7 +419,7 @@ void administratorlogin(){
         scanf("%s",password);
         if(strcmp(IDpassword,password)==0){
             printf("Welcome back!\n");
-            administratorinterface(ID);
+            administratorinterface(ID);//进入管理员界面
         }
         else{
             printf("Password is wrong, please try again.\n");
@@ -435,7 +439,7 @@ char * userIDverification(char * IDU){
     strcpy(IDF, IDU);
     strcat(IDF, file);
     infile=fopen(IDF,"r");
-    if (infile==NULL) {
+    if (infile==NULL) {//验证用户密码是否正确
         strcpy(passwold, valid);
     }
     else{
@@ -443,7 +447,7 @@ char * userIDverification(char * IDU){
         strcpy(passwold, pass);
         fclose(infile);
     }
-    return passwold;
+    return passwold;//返回正确用户密码
 }
 
 
@@ -457,7 +461,7 @@ char  * administratorIDverification(char * IDA){
     strcpy(IDF, IDA);
     strcat(IDF, file);
     infile=fopen(IDF,"r");
-    if (infile==NULL) {
+    if (infile==NULL) {//验证管理员密码是否正确
         strcpy(passwold, valid);
     }
     else{
@@ -465,7 +469,7 @@ char  * administratorIDverification(char * IDA){
         strcpy(passwold, pass);
         fclose(infile);
     }
-    return passwold;
+    return passwold;//返回正确管理员密码
 }
 
 
@@ -518,7 +522,7 @@ void administratorinterface(char * ID){
     FILE *infile;
     strcpy(IDF, ID);
     strcat(IDF, file);
-    infile=fopen(IDF,"r");
+    infile=fopen(IDF,"r");//获取管理员账户信息
     if (infile==NULL) {
         printf("system error\n");
         exit(1);
@@ -534,13 +538,13 @@ void administratorinterface(char * ID){
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
-        {printf("(a)Order order\n");
-            printf("(b)Sort of goods\n");
+        {printf("(a)Order order\n");//订单查看与过滤
+            printf("(b)Sort of goods\n");//商品查看与过滤
             scanf("%s",a);
             scanf("%c",&phantom);
             if(strcmp(a,"a")==0)
-            {printf("(a)Filter by retail price\n");
-                printf("(b)Filter by discountratea\n");
+            {printf("(a)Filter by retail price\n");//按照商品零售价过滤
+                printf("(b)Filter by discountratea\n");//按照商品打折率过滤
                 scanf("%s",a);
                 scanf("%c",&phantom);
                 if(strcmp(a,"a")==0)
@@ -551,8 +555,8 @@ void administratorinterface(char * ID){
                 }
             }
             else if(strcmp(a,"b")==0)
-            {printf("(a)Filter by retail price\n");
-                printf("(b)Filter by Sales\n");
+            {printf("(a)Filter by retail price\n");//按照商品零售价过滤
+                printf("(b)Filter by Sales\n");//按照商品销量过滤
                 scanf("%s",a);
                 scanf("%c",&phantom);
                 if(strcmp(a,"a")==0)
@@ -596,9 +600,9 @@ void goodsinquiries(char * ID){
         if(strcmp(a,"a")==0)
         {   printf("Commoditytype\n");
             scanf("%s",commoditytype);
-            printf("(a)Filter by retail price\n");
-            printf("(b)Filter by Sales\n");
-            printf("(c)Filter by discount rate\n");
+            printf("(a)Filter by retail price\n");//按照商品零售价过滤
+            printf("(b)Filter by Sales\n");//按照商品销量过滤
+            printf("(c)Filter by discount rate\n");//按照商品打折率过滤
             scanf("%s",a);
             scanf("%c",&phantom);
             if(strcmp(a,"a")==0)
@@ -635,9 +639,9 @@ void goodsinquiries(char * ID){
             if(valid==0&&phantom==' '){
                 valid=1;
             }
-            printf("(a)Filter by retail price\n");
-            printf("(b)Filter by Sales\n");
-            printf("(c)Filter by discount rate\n");
+            printf("(a)Filter by retail price\n");//按照商品零售价过滤
+            printf("(b)Filter by Sales\n");//按照商品销量过滤
+            printf("(c)Filter by discount rate\n");//按照商品打折率过滤
             scanf("%s",a);
             scanf("%c",&phantom);
             if(strcmp(a,"a")==0)
@@ -658,9 +662,9 @@ void goodsinquiries(char * ID){
         else if(strcmp(a,"c")==0)
         {printf("Brand\n");
             scanf("%s",brand);
-            printf("(a)Filter by retail price\n");
-            printf("(b)Filter by Sales\n");
-            printf("(c)Filter by discount rate\n");
+            printf("(a)Filter by retail price\n");//按照商品零售价过滤
+            printf("(b)Filter by Sales\n");//按照商品销量过滤
+            printf("(c)Filter by discount rate\n");//按照商品打折率过滤
             scanf("%s",a);
             scanf("%c",&phantom);
             if(strcmp(a,"a")==0)
@@ -690,8 +694,8 @@ void recommendation(char * ID){
     int valid=0;
     while(valid==0)
     {
-        printf("(a)Commodity price\n");
-        printf("(b)Hot items\n");
+        printf("(a)Commodity price\n");//按照商品价格过滤
+        printf("(b)Hot items\n");//按照热门商品过滤
         printf("(c)Return\n");
         scanf("%s",a);
         scanf("%c",&phantom);
@@ -719,7 +723,7 @@ void goodsmanagement(char * ID){
     FILE *infile;
     strcpy(IDF, ID);
     strcat(IDF, file);
-    infile=fopen(IDF,"r");
+    infile=fopen(IDF,"r");//获取管理员账户信息
     if (infile==NULL) {
         printf("system error\n");
         exit(1);
@@ -758,7 +762,7 @@ void userinformation(char * IDU){
     FILE *infile;
     strcpy(IDF, IDU);
     strcat(IDF, file);
-    infile=fopen(IDF,"r");
+    infile=fopen(IDF,"r");//获取用户账户信息
     if (infile==NULL) {
         printf("system error\n");
         exit(1);
@@ -776,7 +780,7 @@ void userinformation(char * IDU){
         if(strcmp(a,"a")==0)
         {printf("%s %s %s %s %s %s %s %5.2f\n",ID,name,gender,phone,pass,mailbox,address,Balancea);
         }
-        else if(strcmp(a,"b")==0)
+        else if(strcmp(a,"b")==0)//修改用户账户信息内容
         {
             printf("Name\n");
             scanf("%s",name);
@@ -854,7 +858,7 @@ void userinformation(char * IDU){
                 exit(1);
             }
             fprintf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
-            fclose(infile);
+            fclose(infile);//关闭文件
         }
         else if(strcmp(a,"c")==0)
         {valida=1;
