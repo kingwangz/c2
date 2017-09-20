@@ -1487,11 +1487,12 @@ void Recharge(char * IDU){
 }
 
 void purchase(char * IDU){
-    char Commoditynumber[20],marketname[15],discountstarttime[55],discountendtime[55],commoditytype[15],brand[15],retailprice[15],purchaseprice[55],inventory[55],inventoryb[55],discountrate[55],Commoditynumberb[20],Sales[55],code[55];
+    char Commoditynumber[20],marketname[15],discountstarttime[55],discountendtime[55],commoditytype[15],brand[15],retailprice[15],purchaseprice[55],inventory[55],inventoryb[55],discountrate[55],Commoditynumberb[20],Sales[55],code[55],Ordernumber[55];
     char ID[20],name[15],gender[15],phone[15],mailbox[15],pass[15],address[15],Balance[15],a[2];
     char Commoditynumbere[500][20],marketnamee[500][15],discountstarttimee[500][55],discountendtimee[500][55],commoditytypee[500][15],brande[500][15],retailpricee[500][15],retailpricef[500][15],purchasepricee[500][15],inventorye[500][15],discountratee[500][15],Salese[500][55];
     char Commoditynumberf[500][20],marketnamef[500][15],discountstarttimef[500][55],discountendtimef[500][55],commoditytypef[500][15],brandf[500][15],retailpriceg[500][15],purchasepricef[500][15],inventoryf[500][15],discountratef[500][15],Salesf[500][55];
     char * Local;
+    char * Locala;
     int valid=1,validb=0,k=0,g=0,inventorya=0,inventoryc = 0,Salesa;
     double balancea,retailpricea,retailpriceb=0,discountratea;
     char phantom;
@@ -1685,7 +1686,22 @@ void purchase(char * IDU){
         fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s\n",Commoditynumbere[i],marketnamef[i],commoditytypef[i],brandf[i],retailpriceg[i],purchasepricef[i],inventoryf[i],discountratef[i],discountstarttimef[i],discountendtimef[i],Salesf[i]);
         }
     fclose(infile);
-    
+    infile=fopen("Order.txt","a+");
+    for(int i=0;i<k;i++){
+        if(strcmp(marketnamef[0],marketnamef[i])==0){
+            strcat(Ordernumber, ID);
+            strcat(Ordernumber, Local);
+            fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumbere[i],marketnamef[i],commoditytypef[i],brandf[i],retailpriceg[i],purchasepricef[i],inventoryf[i],discountratef[i],discountstarttimef[i],discountendtimef[i],Salesf[i]);
+        }
+        else{
+            Locala=timeas();
+            strcat(Ordernumber, ID);
+            strcat(Ordernumber, Locala);
+            fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumbere[i],marketnamef[i],commoditytypef[i],brandf[i],retailpriceg[i],purchasepricef[i],inventoryf[i],discountratef[i],discountstarttimef[i],discountendtimef[i],Salesf[i]);
+        }
+        
+        
+    }
     
 }
 
