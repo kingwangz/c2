@@ -778,7 +778,7 @@ void userinformation(char * IDU){
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
-        {printf("%s %s %s %s %s %s %s %5.2f\n",ID,name,gender,phone,pass,mailbox,address,Balancea);
+        {printf("ID:%s name:%s gender:%s phone:%s pass:%s mailbox%s address:%s Balancea:%5.2f\n",ID,name,gender,phone,pass,mailbox,address,Balancea);
         }
         else if(strcmp(a,"b")==0)//修改用户账户信息内容
         {
@@ -878,7 +878,7 @@ void administratorinformation(char * IDU){
     FILE *infile;
     strcpy(IDF, IDU);
     strcat(IDF, file);
-    infile=fopen(IDF,"r");
+    infile=fopen(IDF,"r");//修改管理员信息
     if (infile==NULL) {
         printf("system error\n");
         exit(1);
@@ -893,7 +893,7 @@ void administratorinformation(char * IDU){
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
-        {printf("%s %s %s %s %s %s %s\n",IDA,name,gender,phone,pass,mailbox,supermarket);
+        {printf("ID:%s name:%s gender:%s phone:%s pass:%s mailbox:%s supermarket:%s\n",IDA,name,gender,phone,pass,mailbox,supermarket);
         }
         else if(strcmp(a,"b")==0)
         {
@@ -971,7 +971,7 @@ void administratorinformation(char * IDU){
                 exit(1);
             }
             fprintf(infile,"%s %s %s %s %s %s %s",IDA,name,gender,phone,pass,mailbox,supermarket);
-            fclose(infile);
+            fclose(infile);//关闭文件
         }
         else if(strcmp(a,"c")==0)
         {valida=1;
@@ -994,7 +994,7 @@ void goodsadd(char *IDH){
     FILE *infile;
     strcpy(IDF, IDH);
     strcat(IDF, file);
-    infile=fopen(IDF,"r");
+    infile=fopen(IDF,"r");//获取管理员账户信息
     if (infile==NULL) {
         printf("system error\n");
         exit(1);
@@ -1020,7 +1020,7 @@ void goodsadd(char *IDH){
         if(valid==1&&phantom==' '){
             valid=0;
         }
-        infile=fopen("goods.txt","r");
+        infile=fopen("goods.txt","r");//使商品号不能重复
         if(infile==NULL){
             printf("system error\n");
             exit(1);
@@ -1039,7 +1039,7 @@ void goodsadd(char *IDH){
         printf("Currently supports the top ten supermarket nationwide\n");
         scanf("%s",marketname);
         scanf("%c",&phantom);
-        if (strcmp(marketname,supermarket)==0) {
+        if (strcmp(marketname,supermarket)==0) {//验证同一超市管理员只能添加自己超市商品
             valid=0;
         }
                 if(valid==0&&phantom==' '){
@@ -1060,7 +1060,7 @@ void goodsadd(char *IDH){
             valid=1;
         }
         while (valid==1&&k<15) {
-            if(isdigit(retailprice[k])==0){
+            if(isdigit(retailprice[k])==0){//使输入长度不受控并保证都为数字
                 valid=0;
             }
             k++;
@@ -1071,7 +1071,7 @@ void goodsadd(char *IDH){
         if(valid==1&&retailprice[k]!='.'){
             valid=0;
         }
-        if(valid==1&&(isdigit(retailprice[k+1])==0||isdigit(retailprice[k+2])==0)){
+        if(valid==1&&(isdigit(retailprice[k+1])==0||isdigit(retailprice[k+2])==0)){//保证小数点后两位为数字
             valid=0;
         }
         if(valid==1&&strlen(retailprice)!=k+3){
@@ -1091,7 +1091,7 @@ void goodsadd(char *IDH){
             valid=0;
         }
         while (valid==0&&k<15) {
-            if(isdigit(purchaseprice[k])==0){
+            if(isdigit(purchaseprice[k])==0){//使输入长度不受控并保证都为数字
                 valid=1;
             }
             k++;
@@ -1102,7 +1102,7 @@ void goodsadd(char *IDH){
         if(valid==0&&purchaseprice[k]!='.'){
             valid=1;
         }
-        if(valid==0&&(isdigit(purchaseprice[k+1])==0||isdigit(purchaseprice[k+2])==0)){
+        if(valid==0&&(isdigit(purchaseprice[k+1])==0||isdigit(purchaseprice[k+2])==0)){//保证小数点后两位为数字
             valid=1;
         }
         if(valid==0&&strlen(purchaseprice)!=k+3){
@@ -1123,7 +1123,7 @@ void goodsadd(char *IDH){
             valid=1;
         }
         while (valid==1&&k<15) {
-            if(isdigit(inventory[k])==0){
+            if(isdigit(inventory[k])==0){//使输入长度不受控并保证都为数字
                 valid=0;
             }
             k++;
@@ -1172,7 +1172,7 @@ void goodsadd(char *IDH){
         scanf("%s",discountstarttime);
         scanf("%c",&phantom);
         for(int k=0;k<4;k++) {
-            if(isdigit(discountstarttime[k])!=0){
+            if(isdigit(discountstarttime[k])!=0){//保证前四位是数字
                 valid=1;
             }
         }
@@ -1182,7 +1182,7 @@ void goodsadd(char *IDH){
         if(valid==1&&isdigit(discountstarttime[5])==0&&isdigit(discountstarttime[6])==0){
             valid=0;
         }
-        if(valid==1&&discountstarttime[5]!='0'&&discountstarttime[5]!='1'){
+        if(valid==1&&discountstarttime[5]!='0'&&discountstarttime[5]!='1'){//保证月份不能大于12
             valid=0;
         }
         if(valid==1&&discountstarttime[5]=='0'){
@@ -1190,7 +1190,7 @@ void goodsadd(char *IDH){
                 valid=0;
             }
         }
-        if(valid==1&&discountstarttime[5]=='1'){
+        if(valid==1&&discountstarttime[5]=='1'){//保证月份不能大于12
             if(discountstarttime[6]>'2'){
                 valid=0;
             }
@@ -1204,16 +1204,16 @@ void goodsadd(char *IDH){
         if(valid==1&&discountstarttime[8]>'3'){
             valid=0;
         }
-        if(valid==1&&atoi(discountstarttime)%400==0){
+        if(valid==1&&atoi(discountstarttime)%400==0){//判断是非为闰年
             leapyear=1;
         }
         if(valid==1&&atoi(discountstarttime)%4==0){
             leapyear=2;
         }
-        if(valid==1&&atoi(discountstarttime)%100==0&&leapyear==2){
+        if(valid==1&&atoi(discountstarttime)%100==0&&leapyear==2){//判断是非为闰年
             leapyear=0;
         }
-        if(valid==1&&(leapyear==2||leapyear==1)){
+        if(valid==1&&(leapyear==2||leapyear==1)){//判定闰年的2月份输入
             if(discountstarttime[5]=='0'&&discountstarttime[6]=='2'){
                 if(discountstarttime[8]>'2'){
                     valid=0;
@@ -1223,7 +1223,7 @@ void goodsadd(char *IDH){
                 }
             }
         }
-        if(valid==1&&leapyear==0){
+        if(valid==1&&leapyear==0){//判定不是闰年的2月份输入
             if(discountstarttime[5]=='0'&&discountstarttime[6]=='2'){
                 if(discountstarttime[8]=='2'){
                     if(discountstarttime[9]>'8'){
@@ -1238,7 +1238,7 @@ void goodsadd(char *IDH){
                 }
             }
         }
-        if(valid==1&&(discountstarttime[6]=='1'||discountstarttime[6]=='3')&&discountstarttime[5]=='0'){
+        if(valid==1&&(discountstarttime[6]=='1'||discountstarttime[6]=='3')&&discountstarttime[5]=='0'){//判定大月
             if(discountstarttime[8]=='3'){
                 if(discountstarttime[9]>'1'){
                     valid=0;
@@ -1278,7 +1278,7 @@ void goodsadd(char *IDH){
                 }
             }
         }
-        if(valid==1&&(discountstarttime[6]=='4'||discountstarttime[6]=='6')&&discountstarttime[5]=='0'){
+        if(valid==1&&(discountstarttime[6]=='4'||discountstarttime[6]=='6')&&discountstarttime[5]=='0'){//判定小月
             if(discountstarttime[8]=='3'){
                 if(discountstarttime[9]!='0'){
                     valid=0;
@@ -1328,7 +1328,7 @@ void goodsadd(char *IDH){
                 valid=0;
             }
         }
-        if(valid==1&&discountstarttime[11]=='2'&&discountstarttime[12]=='4'){
+        if(valid==1&&discountstarttime[11]=='2'&&discountstarttime[12]=='4'){//判定时钟不能超过24
             if(discountstarttime[14]!='0'||discountstarttime[15]!='0'){
                 valid=0;
             }
@@ -1336,7 +1336,7 @@ void goodsadd(char *IDH){
         if(valid==1&&discountstarttime[14]>'6'){
             valid=0;
         }
-        if(valid==1&&discountstarttime[14]=='6'){
+        if(valid==1&&discountstarttime[14]=='6'){//判定分钟不能超过60
             if(discountstarttime[15]!='0'){
                 valid=0;
             }
@@ -1359,7 +1359,7 @@ void goodsadd(char *IDH){
         scanf("%s",discountendtime);
         scanf("%c",&phantom);
         for(int k=0;k<4;k++) {
-            if(isdigit(discountendtime[k])!=0){
+            if(isdigit(discountendtime[k])!=0){//保证前四位是数字
                 valid=0;
             }
         }
@@ -1369,7 +1369,7 @@ void goodsadd(char *IDH){
         if(valid==0&&discountendtime[4]!=':'){
             valid=1;
         }
-        if(valid==0&&isdigit(discountendtime[5])==0&&isdigit(discountendtime[6])==0){
+        if(valid==0&&isdigit(discountendtime[5])==0&&isdigit(discountendtime[6])==0){//保证月份不能大于12
             valid=1;
         }
         if(valid==0&&discountendtime[5]!='0'&&discountendtime[5]!='1'){
@@ -1388,23 +1388,23 @@ void goodsadd(char *IDH){
         if(valid==0&&discountendtime[7]!=':'){
             valid=1;
         }
-        if(valid==0&&isdigit(discountendtime[8])==0&&isdigit(discountendtime[9])==0){
+        if(valid==0&&isdigit(discountendtime[8])==0&&isdigit(discountendtime[9])==0){//保证月份不能大于12
             valid=1;
         }
         if(valid==0&&discountendtime[8]>'3'){
             valid=1;
         }
-        if(valid==0&&atoi(discountendtime)%400==0){
+        if(valid==0&&atoi(discountendtime)%400==0){//判断是非为闰年
             leapyear=1;
         }
         if(valid==0&&atoi(discountendtime)%4==0){
             leapyear=2;
         }
-        if(valid==0&&atoi(discountendtime)%100==0&&leapyear==2){
+        if(valid==0&&atoi(discountendtime)%100==0&&leapyear==2){//判断是非为闰年
             leapyear=0;
         }
         if(valid==0&&(leapyear==2||leapyear==1)){
-            if(discountendtime[5]=='0'&&discountendtime[6]=='2'){
+            if(discountendtime[5]=='0'&&discountendtime[6]=='2'){//判定闰年的2月份输入
                 if(discountendtime[8]>'2'){
                     valid=1;
                 }
@@ -1414,7 +1414,7 @@ void goodsadd(char *IDH){
             }
         }
         if(valid==0&&leapyear==0){
-            if(discountendtime[5]=='0'&&discountendtime[6]=='2'){
+            if(discountendtime[5]=='0'&&discountendtime[6]=='2'){//判定不是闰年的2月份输入
                 if(discountendtime[8]=='2'){
                     if(discountendtime[9]>'8'){
                         valid=1;
@@ -1428,7 +1428,7 @@ void goodsadd(char *IDH){
                 }
             }
         }
-        if(valid==0&&(discountendtime[6]=='1'||discountendtime[6]=='3')&&discountendtime[5]=='0'){
+        if(valid==0&&(discountendtime[6]=='1'||discountendtime[6]=='3')&&discountendtime[5]=='0'){//判定大月
             if(discountendtime[8]=='3'){
                 if(discountendtime[9]>'1'){
                     valid=1;
@@ -1458,7 +1458,7 @@ void goodsadd(char *IDH){
                 }
             }
         }
-        if(valid==0&&(discountendtime[6]=='0'||discountendtime[6]=='2')&&discountendtime[5]=='1'){
+        if(valid==0&&(discountendtime[6]=='0'||discountendtime[6]=='2')&&discountendtime[5]=='1'){//判定小月
             if(discountendtime[8]=='3'){
                 if(discountendtime[9]>'1'){
                     valid=1;
@@ -1518,7 +1518,7 @@ void goodsadd(char *IDH){
                 valid=1;
             }
         }
-        if(valid==0&&discountendtime[11]=='2'&&discountendtime[12]=='4'){
+        if(valid==0&&discountendtime[11]=='2'&&discountendtime[12]=='4'){//判定时钟不能超过24
             if(discountendtime[14]!='0'||discountendtime[15]!='0'){
                 valid=1;
             }
@@ -1526,7 +1526,7 @@ void goodsadd(char *IDH){
         if(valid==0&&discountendtime[14]>'6'){
             valid=1;
         }
-        if(valid==0&&discountendtime[14]=='6'){
+        if(valid==0&&discountendtime[14]=='6'){//判定分钟不能超过60
             if(discountendtime[15]!='0'){
                 valid=1;
             }
@@ -1546,7 +1546,7 @@ void goodsadd(char *IDH){
         printf("Make a change: determine or negative\n");
         scanf("%s",determine);
         scanf("%c",&phantom);
-        if (strcmp(determine,"determine")==0||strcmp(determine,"negative")==0) {
+        if (strcmp(determine,"determine")==0||strcmp(determine,"negative")==0) {//做修改前最后的判定
             valid=1;
         }
         if(valid==1&&phantom==' '){
@@ -1575,7 +1575,7 @@ void Commoditysearch(char * COM,int x,int y){
     char Comparison[55],Comparisonb[55],tempa[55],tempb[55],tempc[55],tempd[55],tempe[55],tempf[55],tempg[55],temph[55],tempi[55],tempj[55],tempk[55];
     FILE *infile;
     int k=0;
-    infile=fopen("goods.txt","r");
+    infile=fopen("goods.txt","r");//获取原来的商品信息
     if(infile==NULL){
         printf("system error\n");
         exit(1);
@@ -1592,7 +1592,7 @@ void Commoditysearch(char * COM,int x,int y){
             strcpy(Comparisonb, brand);
         }
         
-        if( strcmp(Comparisonb,Comparison)==0&&(x==1||x==2||x==3)){
+        if( strcmp(Comparisonb,Comparison)==0&&(x==1||x==2||x==3)){//判定给出的变量
             strcpy(Commoditynumbera[k],Commoditynumber);
             strcpy(marketnamea[k],marketname);
             strcpy(commoditytypea[k],commoditytype);
@@ -1625,7 +1625,7 @@ void Commoditysearch(char * COM,int x,int y){
     if(y==1){
         for(int i=0;i<k-1;i++) {
             for(int j=i+1;j<k;j++){
-                if(strcmp(retailpricea[i],retailpricea[j])>0){
+                if(strcmp(retailpricea[i],retailpricea[j])>0){//使用冒泡排序按商品零售价排序
                     
                     strcpy(tempa, Commoditynumbera[i]);
                     strcpy(tempb, marketnamea[i]);
@@ -1673,7 +1673,7 @@ void Commoditysearch(char * COM,int x,int y){
     if(y==2){
         for(int i=0;i<k-1;i++) {
             for(int j=i+1;j<k;j++){
-                if(atoi(Salesa[i])<atoi(Salesa[j])){
+                if(atoi(Salesa[i])<atoi(Salesa[j])){//使用冒泡排序按商品销量排序
                     
                     strcpy(tempa, Commoditynumbera[i]);
                     strcpy(tempb, marketnamea[i]);
@@ -1721,7 +1721,7 @@ void Commoditysearch(char * COM,int x,int y){
     if(y==3){
         for(int i=0;i<k-1;i++) {
             for(int j=i+1;j<k;j++){
-                if(strcmp(discountratea[i],discountratea[j])>0){
+                if(strcmp(discountratea[i],discountratea[j])>0){//使用冒泡排序按商品打折率排序
                     
                     strcpy(tempa, Commoditynumbera[i]);
                     strcpy(tempb, marketnamea[i]);
@@ -1789,13 +1789,13 @@ void Recharge(char * IDU){
     double balancea;
     strcpy(IDF, IDU);
     strcat(IDF, file);
-    infile=fopen(IDF,"r");
+    infile=fopen(IDF,"r");//获取用户信息
     if (infile==NULL) {
         exit(1);
     }
     fscanf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
     fclose(infile);
-    balancea=(atof(Balance));
+    balancea=(atof(Balance));//将字符型转化为浮点型
     printf("The balance of your account is %5.2f\n",balancea);
     
     printf("Please choose the amount of recharge\n");
@@ -1830,11 +1830,11 @@ void Recharge(char * IDU){
         printf("Illegal input\n");
         return;
     }
-    printf("Enter the code\n");
+    printf("Enter the pass\n");
     scanf("%s",code);
     scanf("%c",&phantom);
-    if(strcmp(code,pass)==0){
-        infile=fopen(IDF,"w");
+    if(strcmp(code,pass)==0){//判定密码是否正确
+        infile=fopen(IDF,"w");//将信息写入文件
         if(infile==NULL){
             printf("system error\n");
             exit(1);
@@ -1873,7 +1873,7 @@ void purchase(char * IDU){
         {  validb=2;
             valid=1;
         }
-        while (valid==0) {
+        while (valid==0) {//判定输入的商品编号
             printf("Please enter the goods number\n");
             printf("Commoditynumber\n");
             printf("Requires two letters four digits\n");
@@ -1898,7 +1898,7 @@ void purchase(char * IDU){
                 printf("Please enter the quantity purchased\n");
                 scanf("%s",inventoryb);
                 scanf("%c",&phantom);
-                if(isdigit(inventoryb[0])!=0){
+                if(isdigit(inventoryb[0])!=0){//判定购买数是否符合要求
                     valid=1;
                 }
                 while (valid==1&&k<15) {
@@ -1918,7 +1918,7 @@ void purchase(char * IDU){
                 }
             }
             if(valid==1){
-                infile=fopen("goods.txt","r");
+                infile=fopen("goods.txt","r");//读取原有的商品信息
                 if(infile==NULL){
                     printf("system error\n");
                     exit(1);
@@ -1937,7 +1937,7 @@ void purchase(char * IDU){
                     break;
                 }
             }
-            if(valid==1){
+            if(valid==1){//判定购买量是否大于库存
                 inventorya=(atoi(inventory));
                 inventoryc=(atoi(inventoryb));
                 if(inventorya<inventoryc){
@@ -1949,20 +1949,20 @@ void purchase(char * IDU){
         if(validb!=2){
             strcpy(IDF, IDU);
             strcat(IDF, file);
-            infile=fopen(IDF,"r");
+            infile=fopen(IDF,"r");//读取原有的用户信息
             if (infile==NULL) {
                 exit(1);
             }
             fscanf(infile,"%s %s %s %s %s %s %s %s",ID,name,gender,phone,pass,mailbox,address,Balance);
             fclose(infile);
-            inventorya=inventorya-inventoryc;
+            inventorya=inventorya-inventoryc;//获得新的仓库商品数
             sprintf( inventory, "%d", inventorya );
             Salesa=(atoi(Sales));
-            Salesa=Salesa+inventoryc;
+            Salesa=Salesa+inventoryc;//获得新的销量
             sprintf( Sales, "%d", Salesa );
             sprintf( inventoryd, "%d", inventoryc );
             
-            strcpy(Commoditynumbere[k],Commoditynumberb);
+            strcpy(Commoditynumbere[k],Commoditynumberb);//将信息存储到二维字符串中
             strcpy(marketnamee[k],marketname);
             strcpy(commoditytypee[k],commoditytype);
             strcpy(brande[k],brand);
@@ -1977,10 +1977,10 @@ void purchase(char * IDU){
             
             
             Local=timeas();
-            if(strcmp(Local,discountstarttime)>0&&strcmp(Local,discountendtime)<0){
+            if(strcmp(Local,discountstarttime)>0&&strcmp(Local,discountendtime)<0){//判定当前时间是否为折扣时间
                 retailpricea=(atof(retailprice));
                 discountratea=(atof(discountrate)/100);
-                retailpricea=retailpricea*discountratea;
+                retailpricea=retailpricea*discountratea;//计算购买商品的价格
             }
             else{
                 retailpricea=(atof(retailprice));
@@ -1989,26 +1989,26 @@ void purchase(char * IDU){
             k++;
         }
     }
-    printf("Enter the code\n");
+    printf("Enter the pass\n");
     scanf("%s",code);
     scanf("%c",&phantom);
-    if(strcmp(code,pass)!=0){
+    if(strcmp(code,pass)!=0){//验证密码是否正确
         printf("wrong password\n");
         return;
     }
     for(int i=0;i<k;i++){
-        retailpriceb=retailpriceb+(atof(retailpricef[i]));
+        retailpriceb=retailpriceb+(atof(retailpricef[i]));//计算所有商品的总价值
     }
-    balancea=(atof(Balance));
+    balancea=(atof(Balance));//判定账户中余额是否足够支付
     if(balancea<retailpriceb){
         printf("Insufficient balance, please recharge\n");
         return;
     }
     else{
-        balancea=balancea-retailpriceb;
+        balancea=balancea-retailpriceb;//扣钱
         sprintf( Balance, "%f", balancea );
     }
-    infile=fopen(IDF,"w");
+    infile=fopen(IDF,"w");//将新文件写入文本中
     if (infile==NULL) {
         exit(1);
     }
@@ -2019,7 +2019,7 @@ void purchase(char * IDU){
         printf("system error\n");
         exit(1);
     }
-    while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s %s",Commoditynumberb,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime,Sales)!=EOF){
+    while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s %s",Commoditynumberb,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime,Sales)!=EOF){//读取原有文件
         strcpy(Commoditynumberf[g],Commoditynumberb);
         strcpy(marketnamef[g],marketname);
         strcpy(commoditytypef[g],commoditytype);
@@ -2036,7 +2036,7 @@ void purchase(char * IDU){
     fclose(infile);
     for(int i=0;i<k;i++){
         for(int l=0;l<g;l++){
-            if(strcmp(Commoditynumberf[l],Commoditynumbere[i])==0){
+            if(strcmp(Commoditynumberf[l],Commoditynumbere[i])==0){//将有变化的属性写入文件
                 strcpy(marketnamef[l],marketnamee[i]);
                 strcpy(commoditytypef[l],commoditytypee[i]);
                 strcpy(brandf[l],brande[i]);
@@ -2050,7 +2050,7 @@ void purchase(char * IDU){
             }
         }
     }
-    infile=fopen("goods.txt","w");
+    infile=fopen("goods.txt","w");//将更新后文件写入文档
     if(infile==NULL){
         printf("system error\n");
         exit(1);
@@ -2059,9 +2059,9 @@ void purchase(char * IDU){
         fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s\n",Commoditynumberf[i],marketnamef[i],commoditytypef[i],brandf[i],retailpriceg[i],purchasepricef[i],inventoryf[i],discountratef[i],discountstarttimef[i],discountendtimef[i],Salesf[i]);
     }
     fclose(infile);
-    infile=fopen("Order.txt","a");
+    infile=fopen("Order.txt","a");//将更新后文件写入文档
     for(int i=0;i<k;i++){
-        if(strcmp(marketnamef[0],marketnamef[i])==0){
+        if(strcmp(marketnamef[0],marketnamef[i])==0){//做订单不同超市的自动整理
             strcpy(Ordernumber," ");
             strcat(Ordernumber, ID);
             strcat(Ordernumber, Local);
@@ -2088,7 +2088,7 @@ void Order(char * ID){
     char Comparison[55];
     int k=0,l=1,valid=0;
     FILE *infile;
-    infile=fopen("Order.txt","r");
+    infile=fopen("Order.txt","r");//读取订单信息
     strcpy(Comparison," ");
     strcat(Comparison, ID);
     while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumber,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime,Sales,inventoryb)!=EOF){
@@ -2141,7 +2141,7 @@ void ordermanagement(char * ID,int y){
     FILE *infile;
     strcpy(IDF, ID);
     strcat(IDF, file);
-    infile=fopen(IDF,"r");
+    infile=fopen(IDF,"r");//读取管理员信息
     if (infile==NULL) {
         printf("system error\n");
         exit(1);
@@ -2173,7 +2173,7 @@ void ordermanagement(char * ID,int y){
     if(y==1){
         for(int i=0;i<k-1;i++) {
             for(int j=i+1;j<k;j++){
-                if(strcmp(retailpricea[i],retailpricea[j])>0){
+                if(strcmp(retailpricea[i],retailpricea[j])>0){//按零售价给订单排序
                     
                     strcpy(tempa, Commoditynumbera[i]);
                     strcpy(tempb, marketnamea[i]);
@@ -2227,7 +2227,7 @@ void ordermanagement(char * ID,int y){
     if(y==2){
         for(int i=0;i<k-1;i++) {
             for(int j=i+1;j<k;j++){
-                if(strcmp(discountratea[i],discountratea[j])>0){
+                if(strcmp(discountratea[i],discountratea[j])>0){//按打折率给订单排序
                     
                     strcpy(tempa, Commoditynumbera[i]);
                     strcpy(tempb, marketnamea[i]);
@@ -2278,7 +2278,9 @@ void ordermanagement(char * ID,int y){
         }
     }
     for(int i=0;i<k;i++){
+        if(strcmp(supermarket,marketnamea[i])==0){
         profit=profit+(((atof(purchasepricea[i]))-(atof(retailpricea[i])))*(atof(inventorya[i])));
+        }
     }
     printf("Full profit %5.2f\n",profit);
     
@@ -2291,8 +2293,8 @@ char * timeas(){
     time_t timer;
     struct tm *tblock;
     timer=time(NULL);
-    tblock=localtime(&timer);
-    strcpy(timea, asctime(tblock));
+    tblock=localtime(&timer);//读取系统本地的时间
+    strcpy(timea, asctime(tblock));//将时间转换成标准格式
     if(timea[4]=='J'&&timea[5]=='a'&&timea[6]=='n'){
         Local[5]='0';
         Local[6]='1';
