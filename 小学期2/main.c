@@ -2226,7 +2226,7 @@ void ordermanagement(char * ID,int y){
         }
     }
     for(int i=0;i<k;i++){
-        profit=profit*(((atof(retailpricea[i]))-(atof(purchasepricea[i])))*(atof(inventorya[i])));
+        profit=profit+(((atof(retailpricea[i]))-(atof(purchasepricea[i])))*(atof(inventorya[i])));
     }
     printf("Full profit %f\n",profit);
 
