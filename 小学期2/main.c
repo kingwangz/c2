@@ -1625,7 +1625,7 @@ void Commoditysearch(char * COM,int x,int y){
     if(y==1){
         for(int i=0;i<k-1;i++) {
             for(int j=i+1;j<k;j++){
-                if(strcmp(retailpricea[i],retailpricea[j])>0){//使用冒泡排序按商品零售价排序
+                if(atof(retailpricea[i])<atof(retailpricea[j])){//使用冒泡排序按商品零售价排序
                     
                     strcpy(tempa, Commoditynumbera[i]);
                     strcpy(tempb, marketnamea[i]);
@@ -1666,8 +1666,9 @@ void Commoditysearch(char * COM,int x,int y){
                 }
             }
         }
+        printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");
         for (int g=0; g<k; g++) {
-            printf("%s %s %s %s %s %s %s %s %s %s %s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
+            printf("%9s %13s %13s %11s %9s %11s %11s %15s %20s %20s %3s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
         }
     }
     if(y==2){
@@ -1714,14 +1715,15 @@ void Commoditysearch(char * COM,int x,int y){
                 }
             }
         }
+        printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");
         for (int g=0; g<k; g++) {
-            printf("%s %s %s %s %s %s %s %s %s %s %s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
+            printf("%9s %13s %13s %11s %9s %11s %11s %15s %20s %20s %3s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
         }
     }
     if(y==3){
         for(int i=0;i<k-1;i++) {
             for(int j=i+1;j<k;j++){
-                if(strcmp(discountratea[i],discountratea[j])>0){//使用冒泡排序按商品打折率排序
+                if(atof(discountratea[i])<atof(discountratea[j])){//使用冒泡排序按商品打折率排序
                     
                     strcpy(tempa, Commoditynumbera[i]);
                     strcpy(tempb, marketnamea[i]);
@@ -1762,14 +1764,15 @@ void Commoditysearch(char * COM,int x,int y){
                 }
             }
         }
+        printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");
         for (int g=0; g<k; g++) {
-            printf("%s %s %s %s %s %s %s %s %s %s %s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
+            printf("%9s %13s %13s %11s %9s %11s %11s %15s %20s %20s %3s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
         }
-        
     }
     if(y==4){
+        printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");
         for (int g=0; g<k; g++) {
-            printf("%s %s %s %s %s %s %s %s %s %s %s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
+            printf("%9s %13s %13s %11s %9s %11s %11s %15s %20s %20s %3s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
         }
         
     }
@@ -1804,6 +1807,8 @@ void Recharge(char * IDU){
     printf("(c)50\n");
     printf("(d)100\n");
     printf("(e)500\n");
+    printf("(f)5000\n");
+    printf("(g)Return\n");
     scanf("%s",a);
     scanf("%c",&phantom);
     if(strcmp(a,"a")==0)
@@ -1825,6 +1830,13 @@ void Recharge(char * IDU){
     else if(strcmp(a,"e")==0)
     {balancea=balancea+500;
         sprintf( Balance, "%f", balancea );
+    }
+    else if(strcmp(a,"f")==0)
+    {balancea=balancea+5000;
+        sprintf( Balance, "%f", balancea );
+    }
+    else if(strcmp(a,"g")==0)
+    { return;
     }
     else{
         printf("Illegal input\n");
@@ -1859,11 +1871,12 @@ void purchase(char * IDU){
     double balancea,retailpricea,retailpriceb=0,discountratea;
     char phantom;
     char file[]=".txt";
-    char IDF[20];
+    char IDF[55];
     FILE *infile;
     while(validb==0)
     {   printf("(a)add to Shopping Cart\n");
         printf("(b)Settlement\n");
+        printf("(c)Return\n");
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
@@ -1872,6 +1885,9 @@ void purchase(char * IDU){
         else if(strcmp(a,"b")==0)
         {  validb=2;
             valid=1;
+        }
+        else if(strcmp(a,"c")==0)
+        {  return;
         }
         while (valid==0) {//判定输入的商品编号
             printf("Please enter the goods number\n");
@@ -2120,9 +2136,9 @@ void Order(char * ID){
         }
     }
     fclose(infile);
-    
+    printf("        Ordernumber       Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales  purchase\n");
     for (int g=0; g<k; g++) {
-        printf("%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
+        printf("%25s %9s %13s %15s %11s %9s %11s %11s %13s %20s %20s %3s %6s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
     }
     
     
@@ -2220,8 +2236,9 @@ void ordermanagement(char * ID,int y){
                 }
             }
         }
+        printf("        Ordernumber       Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales  purchase\n");
         for (int g=0; g<k; g++) {
-            printf("%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
+            printf("%25s %9s %13s %15s %11s %9s %11s %11s %13s %20s %20s %3s %6s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
         }
     }
     if(y==2){
@@ -2273,13 +2290,14 @@ void ordermanagement(char * ID,int y){
                 }
             }
         }
+        printf("        Ordernumber       Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales  purchase\n");
         for (int g=0; g<k; g++) {
-            printf("%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
+            printf("%25s %9s %13s %15s %11s %9s %11s %11s %13s %20s %20s %3s %6s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
         }
     }
     for(int i=0;i<k;i++){
         if(strcmp(supermarket,marketnamea[i])==0){
-        profit=profit+(((atof(purchasepricea[i]))-(atof(retailpricea[i])))*(atof(inventorya[i])));
+        profit=profit+(((atof(retailpricea[i]))-(atof(purchasepricea[i])))*(atof(inventorya[i])));
         }
     }
     printf("Full profit %5.2f\n",profit);
