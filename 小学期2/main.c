@@ -2084,6 +2084,7 @@ void ordermanagement(char * ID,int y){
     char Commoditynumbera[500][20],marketnamea[500][15],discountstarttimea[500][55],discountendtimea[500][55],commoditytypea[500][15],branda[500][15],retailpricea[500][15],purchasepricea[500][55],inventorya[500][55],inventoryba[500][55],discountratea[500][55],Salesa[500][55],Ordernumbera[500][55];
     char Comparison[55],Comparisonb[55],tempa[55],tempb[55],tempc[55],tempd[55],tempe[55],tempf[55],tempg[55],temph[55],tempi[55],tempj[55],tempk[55],templ[55],tempm[55];
     int k=0;
+    double profit=0;
     char file[]="a.txt";
     FILE *infile;
     strcpy(IDF, ID);
@@ -2224,6 +2225,10 @@ void ordermanagement(char * ID,int y){
             printf("%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
         }
     }
+    for(int i=0;i<k;i++){
+        profit=profit*(((atof(retailpricea[i]))-(atof(purchasepricea[i])))*(atof(inventorya[i])));
+    }
+    printf("Full profit %f\n",profit);
 
 }
 
