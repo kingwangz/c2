@@ -115,6 +115,7 @@ void personal(){
                 valid=0;
             }
         }
+
         strcpy(IDF, ID);
         strcat(IDF, file);
         infile=fopen(IDF,"r");
