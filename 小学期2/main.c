@@ -565,7 +565,7 @@ void administratorinterface(char * ID){
                 else if(strcmp(a,"b")==0)
                 {Commoditysearch(supermarket,2, 2);//进入商品排序界面
                 }
-
+                
             }
         }
         else if(strcmp(a,"b")==0)
@@ -1042,7 +1042,7 @@ void goodsadd(char *IDH){
         if (strcmp(marketname,supermarket)==0) {//验证同一超市管理员只能添加自己超市商品
             valid=0;
         }
-                if(valid==0&&phantom==' '){//防止scanf不能识别空格
+        if(valid==0&&phantom==' '){//防止scanf不能识别空格
             valid=1;
         }
     }
@@ -2298,7 +2298,7 @@ void ordermanagement(char * ID,int y){
     }
     for(int i=0;i<k;i++){//加和营业时间中的总利润
         if(strcmp(supermarket,marketnamea[i])==0){
-        profit=profit+(((atof(retailpricea[i]))-(atof(purchasepricea[i])))*(atof(inventorya[i])));
+            profit=profit+(((atof(retailpricea[i]))-(atof(purchasepricea[i])))*(atof(inventorya[i])));
         }
     }
     printf("Full profit %5.2f\n",profit);
