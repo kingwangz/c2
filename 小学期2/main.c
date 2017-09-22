@@ -81,7 +81,7 @@ void registered(){
         {   printf("Enter the administrator invitation code\n");
             scanf("%s",code);
             scanf("%c",&phantom);
-            if(strcmp(code,"kingwang")==0){//进行管理码验证
+            if(strcmp(code,"kingwang")==0){//进行管理码验证,管理码为kingwang
                 administrator();
             }
             else{
@@ -109,9 +109,9 @@ void personal(){
         if(strlen(ID)>5&&strlen(ID)<11){
             valid=1;
         }
-        for(int k=0;k<11&&valid==1;k++) {//验证输入是否为字母
+        for(int k=0;k<11&&valid==1;k++) {//验证输入是否为字母或数字
             if(ispunct(ID[k])!=0){
-                printf("The input must be a letter\n");
+                printf("The input must be a letter or a number\n");
                 valid=0;
             }
         }
@@ -227,9 +227,9 @@ void administrator(){
         if(strlen(IDA)>5&&strlen(IDA)<11){
             valid=1;
         }
-        for(int k=0; k<11 && valid==1 ;k++) {//验证输入是否为字母
+        for(int k=0;k<11&&valid==1;k++) {//验证输入是否为字母或数字
             if(ispunct(IDA[k])!=0){
-                printf("The input must be a letter\n");
+                printf("The input must be a letter or a number\n");
                 valid=0;
             }
         }
@@ -2071,7 +2071,7 @@ void purchase(char * IDU){
         printf("system error\n");
         exit(1);
     }
-    for(int i=0;i<g;i++){
+    for(int i=0;i<g;i++){//进行程序外观的美化
         fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s\n",Commoditynumberf[i],marketnamef[i],commoditytypef[i],brandf[i],retailpriceg[i],purchasepricef[i],inventoryf[i],discountratef[i],discountstarttimef[i],discountendtimef[i],Salesf[i]);
     }
     fclose(infile);
@@ -2084,7 +2084,7 @@ void purchase(char * IDU){
             fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumbere[i],marketnamee[i],commoditytypee[i],brande[i],retailpricee[i],purchasepricee[i],inventorye[i],discountratee[i],discountstarttimee[i],discountendtimee[i],Salese[i],inventoryh[i]);
             
         }
-        else{
+        else{//如果超市不同订单号的最后两位加二
             Locala=timeas();
             Locala[15]=Locala[15]+2;
             strcpy(Ordernumbera," ");
@@ -2106,20 +2106,19 @@ void Order(char * ID){
     int k=0,l=1,valid=0;
     FILE *infile;
     infile=fopen("Order.txt","r");//读取订单信息
-    strcpy(Comparison," ");
     strcat(Comparison, ID);
     while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumber,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime,Sales,inventoryb)!=EOF){
         valid=0;
         l=1;
-        while (isdigit(Ordernumber[l])!=0) {
+        while (ispunct(Ordernumber[l])==0) {//读取订单号中的用户名
             l++;
         }
-        for(int i=1;i<l;i++){
-            if(Comparison[i]!=Ordernumber[i]){
+        for(int i=1;i<l-4;i++){
+            if(Comparison[i]!=Ordernumber[i]){//判定用户名和订单号中的用户名是否一致
                 valid=1;
             }
         }
-        if(valid==0){
+        if(valid==0){//过滤使每个用户只能看到自己的订单
             strcpy(Commoditynumbera[k],Commoditynumber);
             strcpy(marketnamea[k],marketname);
             strcpy(commoditytypea[k],commoditytype);
@@ -2137,7 +2136,8 @@ void Order(char * ID){
         }
     }
     fclose(infile);
-    printf("        Ordernumber       Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales  purchase\n");
+    
+    printf("        Ordernumber       Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales  purchase\n");//进行界面的美化
     for (int g=0; g<k; g++) {
         printf("%25s %9s %13s %15s %9s %11s %11s %11s %13s %20s %20s %3s %6s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
     }
@@ -2169,7 +2169,7 @@ void ordermanagement(char * ID,int y){
     strcpy(Comparison,supermarket);
     while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s %s %s %s\n",Ordernumber,Commoditynumber,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime,Sales,inventoryb)!=EOF){
         strcpy(Comparisonb,marketname);
-        if(strcmp(Comparisonb,Comparison)==0){
+        if(strcmp(Comparisonb,Comparison)==0){//使每个超市只能查看自己的订单
             strcpy(Commoditynumbera[k],Commoditynumber);
             strcpy(marketnamea[k],marketname);
             strcpy(commoditytypea[k],commoditytype);
@@ -2238,7 +2238,7 @@ void ordermanagement(char * ID,int y){
             }
         }
         printf("        Ordernumber       Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales  purchase\n");
-        for (int g=0; g<k; g++) {
+        for (int g=0; g<k; g++) {//进行程序外观的美化
             printf("%25s %9s %13s %15s %11s %9s %11s %11s %13s %20s %20s %3s %6s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
         }
     }
@@ -2292,11 +2292,11 @@ void ordermanagement(char * ID,int y){
             }
         }
         printf("        Ordernumber       Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales  purchase\n");
-        for (int g=0; g<k; g++) {
+        for (int g=0; g<k; g++) {//进行程序外观的美化
             printf("%25s %9s %13s %15s %11s %9s %11s %11s %13s %20s %20s %3s %6s\n",Ordernumbera[g],Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g],inventoryba[g]);
         }
     }
-    for(int i=0;i<k;i++){
+    for(int i=0;i<k;i++){//加和营业时间中的总利润
         if(strcmp(supermarket,marketnamea[i])==0){
         profit=profit+(((atof(retailpricea[i]))-(atof(purchasepricea[i])))*(atof(inventorya[i])));
         }
