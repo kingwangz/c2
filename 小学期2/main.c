@@ -48,10 +48,10 @@ int main() {//主程序
         scanf("%s",a);
         scanf("%c",&phantom);//验证幻影符
         if(strcmp(a,"a")==0)//选择注册界面
-        {registered();
+        {registered();//进入注册界面
         }
         else if(strcmp(a,"b")==0)//选择登录界面
-        {logins();
+        {logins();//进入登录界面
         }
         else if(strcmp(a,"c")==0)//退出系统
         {valid=1;
@@ -75,21 +75,21 @@ void registered(){
         scanf("%s",a);
         scanf("%c",&phantom);//验证幻影符
         if(strcmp(a,"a")==0)
-        {personal();
+        {personal();//进入用户注册界面
         }
         else if(strcmp(a,"b")==0)
         {   printf("Enter the administrator invitation code\n");
             scanf("%s",code);
             scanf("%c",&phantom);
             if(strcmp(code,"kingwang")==0){//进行管理码验证,管理码为kingwang
-                administrator();
+                administrator();//进入管理员注册界面
             }
             else{
                 printf("Invitation code error\n");
             }
         }
         else if(strcmp(a,"c")==0)
-        {valid=1;}
+        {valid=1;}//返回程序上一级
     }
 }
 
@@ -106,7 +106,7 @@ void personal(){
         printf("Length 6-10 characters\n");
         scanf("%s",ID);
         scanf("%c",&phantom);
-        if(strlen(ID)>5&&strlen(ID)<11){
+        if(strlen(ID)>5&&strlen(ID)<11){//验证输入长度
             valid=1;
         }
         for(int k=0;k<11&&valid==1;k++) {//验证输入是否为字母或数字
@@ -134,10 +134,10 @@ void personal(){
         printf("Please choose a man or a lady\n");
         scanf("%s",gender);
         scanf("%c",&phantom);
-        if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {
+        if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {//验证输入只能为man 或lady
             valid=0;
         }
-        if(valid==0&&phantom==' '){
+        if(valid==0&&phantom==' '){//防止scanf不能识别空格
             valid=1;
         }
     }
@@ -147,7 +147,7 @@ void personal(){
         scanf("%s",phone);
         scanf("%c",&phantom);
         valid=1;
-        if(strlen(phone)!=11){
+        if(strlen(phone)!=11){//验证输入长度
             valid=0;
         }
         for(int k=0;k<11&&valid==1;k++) {//验证输入是否为数字
@@ -168,7 +168,7 @@ void personal(){
         scanf("%s",mailbox);
         scanf("%c",&phantom);
         valid=0;
-        if(strlen(mailbox)!=11){
+        if(strlen(mailbox)!=11){//验证输入长度
             valid=1;
         }
         for(int k=0;k<3&&valid==0;k++) {
@@ -224,7 +224,7 @@ void administrator(){
         printf("Length 6-10 characters\n");
         scanf("%s",IDA);
         scanf("%c",&phantom);
-        if(strlen(IDA)>5&&strlen(IDA)<11){
+        if(strlen(IDA)>5&&strlen(IDA)<11){//验证输入长度
             valid=1;
         }
         for(int k=0;k<11&&valid==1;k++) {//验证输入是否为字母或数字
@@ -251,7 +251,7 @@ void administrator(){
         printf("Please choose a man or a lady\n");
         scanf("%s",gender);
         scanf("%c",&phantom);
-        if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {
+        if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {//验证输入只能为man 或lady
             valid=0;
         }
         if(valid==0&&phantom==' '){//防止scanf不能识别空格
@@ -264,7 +264,7 @@ void administrator(){
         scanf("%s",phone);
         scanf("%c",&phantom);
         valid=1;
-        if(strlen(phone)!=11){
+        if(strlen(phone)!=11){//验证输入长度
             valid=0;
         }
         for(int k=0;k<11&&valid==1;k++) {//验证输入是否为数字
@@ -285,7 +285,7 @@ void administrator(){
         scanf("%s",mailbox);
         scanf("%c",&phantom);
         valid=0;
-        if(strlen(mailbox)!=11){
+        if(strlen(mailbox)!=11){//验证输入长度
             valid=1;
         }
         for(int k=0;k<3&&valid==0;k++) {
@@ -309,7 +309,7 @@ void administrator(){
                 valid=1;
             }
         }
-        if(valid==0&&phantom==' '){
+        if(valid==0&&phantom==' '){//防止scanf不能识别空格
             valid=1;
         }
     }
@@ -318,19 +318,19 @@ void administrator(){
         printf("Currently supports the top ten supermarket nationwide\n");
         scanf("%s",supermarket);
         scanf("%c",&phantom);
-        if (strcmp(supermarket,"WM")==0||strcmp(supermarket,"CF")==0||strcmp(supermarket,"SN")==0) {
+        if (strcmp(supermarket,"WM")==0||strcmp(supermarket,"CF")==0||strcmp(supermarket,"SN")==0) {//验证输入超市名
             valid=1;
         }
-        if (strcmp(supermarket,"GM")==0||strcmp(supermarket,"VG")==0||strcmp(supermarket,"RT")==0) {
+        if (strcmp(supermarket,"GM")==0||strcmp(supermarket,"VG")==0||strcmp(supermarket,"RT")==0) {//验证输入超市名
             valid=1;
         }
-        if (strcmp(supermarket,"BL")==0||strcmp(supermarket,"YH")==0||strcmp(supermarket,"IZ")==0) {
+        if (strcmp(supermarket,"BL")==0||strcmp(supermarket,"YH")==0||strcmp(supermarket,"IZ")==0) {//验证输入超市名
             valid=1;
         }
-        if (strcmp(supermarket,"WU")==0) {
+        if (strcmp(supermarket,"WU")==0) {//验证输入超市名
             valid=1;
         }
-        if(valid==1&&phantom==' '){
+        if(valid==1&&phantom==' '){//防止scanf不能识别空格
             valid=0;
         }
     }
@@ -360,13 +360,13 @@ void logins(){
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
-        {userlogin();
+        {userlogin();//进入用户登录界面
         }
         else if(strcmp(a,"b")==0)
-        {administratorlogin();
+        {administratorlogin();//进入管理员登录界面
         }
         else if(strcmp(a,"c")==0)
-        {valid=1;}
+        {valid=1;}//返回程序上一级
     }
     
 }
@@ -438,7 +438,7 @@ char * userIDverification(char * IDU){
     char valid[]="h";
     strcpy(IDF, IDU);
     strcat(IDF, file);
-    infile=fopen(IDF,"r");
+    infile=fopen(IDF,"r");//读取用户信息
     if (infile==NULL) {//验证用户密码是否正确
         strcpy(passwold, valid);
     }
@@ -460,7 +460,7 @@ char  * administratorIDverification(char * IDA){
     char valid[]="h";
     strcpy(IDF, IDA);
     strcat(IDF, file);
-    infile=fopen(IDF,"r");
+    infile=fopen(IDF,"r");//读取管理员信息
     if (infile==NULL) {//验证管理员密码是否正确
         strcpy(passwold, valid);
     }
@@ -489,19 +489,19 @@ void userinterface(char * ID){
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
-        {goodsinquiries(ID);
+        {goodsinquiries(ID);//进入商品查找界面
         }
         else if(strcmp(a,"b")==0)
-        {recommendation(ID);
+        {recommendation(ID);//进入热门推荐界面
         }
         else if(strcmp(a,"c")==0)
-        {userinformation(ID);
+        {userinformation(ID);//进入用户信息界面
         }
         else if(strcmp(a,"d")==0)
-        {Order(ID);
+        {Order(ID);//进入订单界面
         }
         else if(strcmp(a,"e")==0)
-        {Recharge(ID);
+        {Recharge(ID);//进入余额查看和充值界面
         }
         else if(strcmp(a,"f")==0)
         {valid=1;
@@ -548,10 +548,10 @@ void administratorinterface(char * ID){
                 scanf("%s",a);
                 scanf("%c",&phantom);
                 if(strcmp(a,"a")==0)
-                {ordermanagement(ID,1);
+                {ordermanagement(ID,1);//进入订单管理界面
                 }
                 else if(strcmp(a,"b")==0)
-                {ordermanagement(ID,2);
+                {ordermanagement(ID,2);//进入订单管理界面
                 }
             }
             else if(strcmp(a,"b")==0)
@@ -560,21 +560,21 @@ void administratorinterface(char * ID){
                 scanf("%s",a);
                 scanf("%c",&phantom);
                 if(strcmp(a,"a")==0)
-                {Commoditysearch(supermarket,2, 1);
+                {Commoditysearch(supermarket,2, 1);//进入商品排序界面
                 }
                 else if(strcmp(a,"b")==0)
-                {Commoditysearch(supermarket,2, 2);
+                {Commoditysearch(supermarket,2, 2);//进入商品排序界面
                 }
 
             }
         }
         else if(strcmp(a,"b")==0)
-        {goodsmanagement(ID);
+        {goodsmanagement(ID);//进入商品管理界面
         }
         else if(strcmp(a,"c")==0)
-        {administratorinformation(ID);
+        {administratorinformation(ID);//进入管理员信息界面
         }
-        else if(strcmp(a,"d")==0)
+        else if(strcmp(a,"d")==0)//返回程序上一级
         {valid=1;
         }
     }
@@ -606,16 +606,16 @@ void goodsinquiries(char * ID){
             scanf("%s",a);
             scanf("%c",&phantom);
             if(strcmp(a,"a")==0)
-            {Commoditysearch(commoditytype,1, 1);
-                purchase(ID);
+            {Commoditysearch(commoditytype,1, 1);//进入商品排序界面
+                purchase(ID);//进入购买界面
             }
             else if(strcmp(a,"b")==0)
-            {Commoditysearch(commoditytype, 1, 2);
-                purchase(ID);
+            {Commoditysearch(commoditytype, 1, 2);//进入商品排序界面
+                purchase(ID);//进入购买界面
             }
             else if(strcmp(a,"c")==0)
-            {Commoditysearch(commoditytype, 1, 3);
-                purchase(ID);
+            {Commoditysearch(commoditytype, 1, 3);//进入商品排序界面
+                purchase(ID);//进入购买界面
             }
         }
         else if(strcmp(a,"b")==0)
@@ -624,16 +624,16 @@ void goodsinquiries(char * ID){
             printf("Currently supports the top ten supermarket nationwide\n");
             scanf("%s",marketname);
             scanf("%c",&phantom);
-            if (strcmp(marketname,"WM")==0||strcmp(marketname,"CF")==0||strcmp(marketname,"SN")==0) {
+            if (strcmp(marketname,"WM")==0||strcmp(marketname,"CF")==0||strcmp(marketname,"SN")==0) {//验证商品名称的输入
                 valid=0;
             }
-            if (strcmp(marketname,"GM")==0||strcmp(marketname,"VG")==0||strcmp(marketname,"RT")==0) {
+            if (strcmp(marketname,"GM")==0||strcmp(marketname,"VG")==0||strcmp(marketname,"RT")==0) {//验证商品名称的输入
                 valid=0;
             }
-            if (strcmp(marketname,"BL")==0||strcmp(marketname,"YH")==0||strcmp(marketname,"IZ")==0) {
+            if (strcmp(marketname,"BL")==0||strcmp(marketname,"YH")==0||strcmp(marketname,"IZ")==0) {//验证商品名称的输入
                 valid=0;
             }
-            if (strcmp(marketname,"WU")==0) {
+            if (strcmp(marketname,"WU")==0) {//验证商品名称的输入
                 valid=0;
             }
             if(valid==0&&phantom==' '){
@@ -645,16 +645,16 @@ void goodsinquiries(char * ID){
             scanf("%s",a);
             scanf("%c",&phantom);
             if(strcmp(a,"a")==0)
-            {Commoditysearch(marketname,2, 1);
-                purchase(ID);
+            {Commoditysearch(marketname,2, 1);//进入商品排序界面
+                purchase(ID);//进入购买界面
             }
             else if(strcmp(a,"b")==0)
-            {Commoditysearch(marketname,2, 2);
-                purchase(ID);
+            {Commoditysearch(marketname,2, 2);//进入商品排序界面
+                purchase(ID);//进入购买界面
             }
             else if(strcmp(a,"c")==0)
-            {Commoditysearch(marketname,2, 3);
-                purchase(ID);
+            {Commoditysearch(marketname,2, 3);//进入商品排序界面
+                purchase(ID);//进入购买界面
             }
         }
             
@@ -668,20 +668,20 @@ void goodsinquiries(char * ID){
             scanf("%s",a);
             scanf("%c",&phantom);
             if(strcmp(a,"a")==0)
-            {Commoditysearch(brand,3, 1);
-                purchase(ID);
+            {Commoditysearch(brand,3, 1);//进入商品排序界面
+                purchase(ID);//进入购买界面
             }
             else if(strcmp(a,"b")==0)
-            {Commoditysearch(brand,3, 2);
-                purchase(ID);
+            {Commoditysearch(brand,3, 2);//进入商品排序界面
+                purchase(ID);//进入购买界面
             }
             else if(strcmp(a,"c")==0)
-            {Commoditysearch(brand,3, 3);
-                purchase(ID);
+            {Commoditysearch(brand,3, 3);//进入商品排序界面
+                purchase(ID);//进入购买界面
             }
             
         }
-        else if(strcmp(a,"d")==0)
+        else if(strcmp(a,"d")==0)//返回程序上一级
         {valida=1;
         }
     }
@@ -700,14 +700,14 @@ void recommendation(char * ID){
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
-        {Commoditysearch(retailprice,4, 4);
-            purchase(ID);
+        {Commoditysearch(retailprice,4, 4);//进入商品排序界面
+            purchase(ID);//进入购买界面
         }
         else if(strcmp(a,"b")==0)
-        {Commoditysearch(Commoditynumber,4, 1);
-            purchase(ID);
+        {Commoditysearch(Commoditynumber,4, 1);//进入商品排序界面
+            purchase(ID);//进入购买界面
         }
-        else if(strcmp(a,"c")==0)
+        else if(strcmp(a,"c")==0)//返回程序上一级
         {valid=1;
         }
     }
@@ -738,12 +738,12 @@ void goodsmanagement(char * ID){
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
-        {Commoditysearch(supermarket,2, 2);
+        {Commoditysearch(supermarket,2, 2);//进入商品排序界面
         }
         else if(strcmp(a,"b")==0)
-        {goodsadd(ID);
+        {goodsadd(ID);//进入商品添加界面
         }
-        else if(strcmp(a,"c")==0)
+        else if(strcmp(a,"c")==0)//返回程序上一级
         {valid=1;
         }
         
@@ -778,7 +778,7 @@ void userinformation(char * IDU){
         scanf("%s",a);
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
-        {printf("ID:%s name:%s gender:%s phone:%s pass:%s mailbox%s address:%s Balancea:%5.2f\n",ID,name,gender,phone,pass,mailbox,address,Balancea);
+        {printf("ID:%s name:%s gender:%s phone:%s pass:%s mailbox%s address:%s Balancea:%5.2f\n",ID,name,gender,phone,pass,mailbox,address,Balancea);//输出用户信息
         }
         else if(strcmp(a,"b")==0)//修改用户账户信息内容
         {
@@ -789,10 +789,10 @@ void userinformation(char * IDU){
                 printf("Please choose a man or a lady\n");
                 scanf("%s",gender);
                 scanf("%c",&phantom);
-                if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {
+                if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {//验证输入只能为man 或lady
                     valid=0;
                 }
-                if(valid==0&&phantom==' '){
+                if(valid==0&&phantom==' '){//防止scanf不能识别空格
                     valid=1;
                 }
             }
@@ -802,15 +802,15 @@ void userinformation(char * IDU){
                 scanf("%s",phone);
                 scanf("%c",&phantom);
                 valid=1;
-                if(strlen(phone)!=11){
+                if(strlen(phone)!=11){//验证输入长度
                     valid=0;
                 }
-                for(int k=0;k<11&&valid==1;k++) {
+                for(int k=0;k<11&&valid==1;k++) {//验证输入只能为字母或数字
                     if(isdigit(phone[k])==0){
                         valid=0;
                     }
                 }
-                if(valid==1&&phantom==' '){
+                if(valid==1&&phantom==' '){//防止scanf不能识别空格
                     valid=0;
                 }
             }
@@ -822,7 +822,7 @@ void userinformation(char * IDU){
                 scanf("%s",mailbox);
                 scanf("%c",&phantom);
                 valid=0;
-                if(strlen(mailbox)!=11){
+                if(strlen(mailbox)!=11){//验证输入长度
                     valid=1;
                 }
                 for(int k=0;k<3&&valid==0;k++) {
@@ -846,7 +846,7 @@ void userinformation(char * IDU){
                         valid=1;
                     }
                 }
-                if(valid==0&&phantom==' '){
+                if(valid==0&&phantom==' '){//防止scanf不能识别空格
                     valid=1;
                 }
             }
@@ -894,7 +894,7 @@ void administratorinformation(char * IDU){
         scanf("%c",&phantom);
         if(strcmp(a,"a")==0)
         {printf("ID:%s name:%s gender:%s phone:%s pass:%s mailbox:%s supermarket:%s\n",IDA,name,gender,phone,pass,mailbox,supermarket);
-        }
+        }//输出管理员信息
         else if(strcmp(a,"b")==0)
         {
             printf("Name\n");
@@ -904,10 +904,10 @@ void administratorinformation(char * IDU){
                 printf("Please choose a man or a lady\n");
                 scanf("%s",gender);
                 scanf("%c",&phantom);
-                if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {
+                if (strcmp(gender,"man")==0||strcmp(gender,"lady")==0) {//验证输入只能为man 或lady
                     valid=0;
                 }
-                if(valid==0&&phantom==' '){
+                if(valid==0&&phantom==' '){//防止scanf不能识别空格
                     valid=1;
                 }
             }
@@ -917,15 +917,15 @@ void administratorinformation(char * IDU){
                 scanf("%s",phone);
                 scanf("%c",&phantom);
                 valid=1;
-                if(strlen(phone)!=11){
+                if(strlen(phone)!=11){//验证输入长度
                     valid=0;
                 }
-                for(int k=0;k<11&&valid==1;k++) {
+                for(int k=0;k<11&&valid==1;k++) {//验证输入只能为字母或数字
                     if(isdigit(phone[k])==0){
                         valid=0;
                     }
                 }
-                if(valid==1&&phantom==' '){
+                if(valid==1&&phantom==' '){//防止scanf不能识别空格
                     valid=0;
                 }
             }
@@ -937,7 +937,7 @@ void administratorinformation(char * IDU){
                 scanf("%s",mailbox);
                 scanf("%c",&phantom);
                 valid=0;
-                if(strlen(mailbox)!=11){
+                if(strlen(mailbox)!=11){//验证输入长度
                     valid=1;
                 }
                 for(int k=0;k<3&&valid==0;k++) {
@@ -961,7 +961,7 @@ void administratorinformation(char * IDU){
                         valid=1;
                     }
                 }
-                if(valid==0&&phantom==' '){
+                if(valid==0&&phantom==' '){//防止scanf不能识别空格
                     valid=1;
                 }
             }
@@ -1006,18 +1006,18 @@ void goodsadd(char *IDH){
         printf("Requires two letters four digits\n");
         scanf("%s",Commoditynumber);
         scanf("%c",&phantom);
-        if (isalpha(Commoditynumber[0])!=0&&isalpha(Commoditynumber[1])!=0){
+        if (isalpha(Commoditynumber[0])!=0&&isalpha(Commoditynumber[1])!=0){//验证输入前两位为字母
             valid=1;
         }
         for(int k=2;k<6&&valid==1;k++) {
-            if(isdigit(Commoditynumber[k])==0){
+            if(isdigit(Commoditynumber[k])==0){//验证输入后四位为数字
                 valid=0;
             }
         }
-        if(valid==1&&strlen(Commoditynumber)!=6){
+        if(valid==1&&strlen(Commoditynumber)!=6){//验证输入长度
             valid=0;
         }
-        if(valid==1&&phantom==' '){
+        if(valid==1&&phantom==' '){//防止scanf不能识别空格
             valid=0;
         }
         infile=fopen("goods.txt","r");//使商品号不能重复
@@ -1042,7 +1042,7 @@ void goodsadd(char *IDH){
         if (strcmp(marketname,supermarket)==0) {//验证同一超市管理员只能添加自己超市商品
             valid=0;
         }
-                if(valid==0&&phantom==' '){
+                if(valid==0&&phantom==' '){//防止scanf不能识别空格
             valid=1;
         }
     }
@@ -1056,7 +1056,7 @@ void goodsadd(char *IDH){
         printf("According  format: xxx.xx \n");
         scanf("%s",retailprice);
         scanf("%c",&phantom);
-        if(isdigit(retailprice[0])!=0){
+        if(isdigit(retailprice[0])!=0){//验证第一位为数字
             valid=1;
         }
         while (valid==1&&k<15) {
@@ -1064,20 +1064,20 @@ void goodsadd(char *IDH){
                 valid=0;
             }
             k++;
-            if(retailprice[k]=='.'){
+            if(retailprice[k]=='.'){//保证小数点位置
                 break;
             }
         }
-        if(valid==1&&retailprice[k]!='.'){
+        if(valid==1&&retailprice[k]!='.'){//保证小数点位置
             valid=0;
         }
         if(valid==1&&(isdigit(retailprice[k+1])==0||isdigit(retailprice[k+2])==0)){//保证小数点后两位为数字
             valid=0;
         }
-        if(valid==1&&strlen(retailprice)!=k+3){
+        if(valid==1&&strlen(retailprice)!=k+3){//验证输入长度
             valid=0;
         }
-        if(valid==1&&phantom==' '){
+        if(valid==1&&phantom==' '){//防止scanf不能识别空格
             valid=0;
         }
     }
@@ -1087,7 +1087,7 @@ void goodsadd(char *IDH){
         printf("According  format: xxx.xx \n");
         scanf("%s",purchaseprice);
         scanf("%c",&phantom);
-        if(isdigit(purchaseprice[0])!=0){
+        if(isdigit(purchaseprice[0])!=0){//验证第一位为数字
             valid=0;
         }
         while (valid==0&&k<15) {
@@ -1095,20 +1095,20 @@ void goodsadd(char *IDH){
                 valid=1;
             }
             k++;
-            if(purchaseprice[k]=='.'){
+            if(purchaseprice[k]=='.'){//保证小数点位置
                 break;
             }
         }
-        if(valid==0&&purchaseprice[k]!='.'){
+        if(valid==0&&purchaseprice[k]!='.'){//保证小数点位置
             valid=1;
         }
         if(valid==0&&(isdigit(purchaseprice[k+1])==0||isdigit(purchaseprice[k+2])==0)){//保证小数点后两位为数字
             valid=1;
         }
-        if(valid==0&&strlen(purchaseprice)!=k+3){
+        if(valid==0&&strlen(purchaseprice)!=k+3){//验证输入长度
             valid=1;
         }
-        if(valid==0&&phantom==' '){
+        if(valid==0&&phantom==' '){//防止scanf不能识别空格
             valid=1;
         }
     }
@@ -1119,7 +1119,7 @@ void goodsadd(char *IDH){
         printf("According  format: xxx\n");
         scanf("%s",inventory);
         scanf("%c",&phantom);
-        if(isdigit(inventory[0])!=0){
+        if(isdigit(inventory[0])!=0){//验证第一位为数字
             valid=1;
         }
         while (valid==1&&k<15) {
@@ -1127,14 +1127,14 @@ void goodsadd(char *IDH){
                 valid=0;
             }
             k++;
-            if(inventory[k]=='\0'){
+            if(inventory[k]=='\0'){//验证输入最后一为
                 break;
             }
         }
-        if(valid==1&&strlen(inventory)!=k){
+        if(valid==1&&strlen(inventory)!=k){//验证输入长度
             valid=0;
         }
-        if(valid==1&&phantom==' '){
+        if(valid==1&&phantom==' '){//防止scanf不能识别空格
             valid=0;
         }
     }
@@ -1143,25 +1143,25 @@ void goodsadd(char *IDH){
         printf("According to the percentage format: xx.x%% \n");
         scanf("%s",discountrate);
         scanf("%c",&phantom);
-        if(isdigit(discountrate[0])!=0&&isdigit(discountrate[1])!=0){
+        if(isdigit(discountrate[0])!=0&&isdigit(discountrate[1])!=0){//验证输入前两位为字母
             valid=0;
         }
-        if(valid==0&&discountrate[2]!='.'){
+        if(valid==0&&discountrate[2]!='.'){//保证小数点位置
             valid=1;
         }
         if(valid==0&&isdigit(discountrate[3])==0){
             valid=1;
         }
-        if(valid==0&&discountrate[4]!='%'){
+        if(valid==0&&discountrate[4]!='%'){//保证百分号位置
             valid=1;
         }
-        if(valid==0&&strlen(discountrate)!=5){
+        if(valid==0&&strlen(discountrate)!=5){//验证输入长度
             valid=1;
         }
-        if(strcmp(discountrate,"100.00%")==0){
+        if(strcmp(discountrate,"100.00%")==0){//保证可以输入100%
             valid=0;
         }
-        if(valid==0&&phantom==' '){
+        if(valid==0&&phantom==' '){//防止scanf不能识别空格
             valid=1;
         }
     }
@@ -1176,7 +1176,7 @@ void goodsadd(char *IDH){
                 valid=1;
             }
         }
-        if(valid==1&&discountstarttime[4]!=':'){
+        if(valid==1&&discountstarttime[4]!=':'){//保证冒号位置
             valid=0;
         }
         if(valid==1&&isdigit(discountstarttime[5])==0&&isdigit(discountstarttime[6])==0){
@@ -1195,7 +1195,7 @@ void goodsadd(char *IDH){
                 valid=0;
             }
         }
-        if(valid==1&&discountstarttime[7]!=':'){
+        if(valid==1&&discountstarttime[7]!=':'){//保证冒号位置
             valid=0;
         }
         if(valid==1&&isdigit(discountstarttime[8])==0&&isdigit(discountstarttime[9])==0){
@@ -1308,10 +1308,10 @@ void goodsadd(char *IDH){
                 }
             }
         }
-        if(valid==1&&discountstarttime[10]!=':'){
+        if(valid==1&&discountstarttime[10]!=':'){//保证冒号位置
             valid=0;
         }
-        if(valid==1&&discountstarttime[13]!=':'){
+        if(valid==1&&discountstarttime[13]!=':'){//保证冒号位置
             valid=0;
         }
         if(valid==1&&isdigit(discountstarttime[11])==0&&isdigit(discountstarttime[12])==0){
@@ -1344,7 +1344,7 @@ void goodsadd(char *IDH){
         if(valid==1&&strlen(discountstarttime)!=16){
             valid=0;
         }
-        if(strcmp(discountstarttime,"0000:00:00:00:00")==0){
+        if(strcmp(discountstarttime,"0000:00:00:00:00")==0){//保证可以输入0000:00:00:00:00
             valid=1;
         }
         if(valid==1&&phantom==' '){
@@ -1366,7 +1366,7 @@ void goodsadd(char *IDH){
         if(valid==0&&strcmp(discountendtime,discountstarttime)<0){
             valid=1;
         }
-        if(valid==0&&discountendtime[4]!=':'){
+        if(valid==0&&discountendtime[4]!=':'){//保证冒号位置
             valid=1;
         }
         if(valid==0&&isdigit(discountendtime[5])==0&&isdigit(discountendtime[6])==0){//保证月份不能大于12
@@ -1385,7 +1385,7 @@ void goodsadd(char *IDH){
                 valid=1;
             }
         }
-        if(valid==0&&discountendtime[7]!=':'){
+        if(valid==0&&discountendtime[7]!=':'){//保证冒号位置
             valid=1;
         }
         if(valid==0&&isdigit(discountendtime[8])==0&&isdigit(discountendtime[9])==0){//保证月份不能大于12
@@ -1498,10 +1498,10 @@ void goodsadd(char *IDH){
                 }
             }
         }
-        if(valid==0&&discountendtime[10]!=':'){
+        if(valid==0&&discountendtime[10]!=':'){//保证冒号位置
             valid=1;
         }
-        if(valid==0&&discountendtime[13]!=':'){
+        if(valid==0&&discountendtime[13]!=':'){//保证冒号位置
             valid=1;
         }
         if(valid==0&&isdigit(discountendtime[11])==0&&isdigit(discountendtime[12])==0){
@@ -1534,7 +1534,7 @@ void goodsadd(char *IDH){
         if(valid==0&&strlen(discountendtime)!=16){
             valid=1;
         }
-        if(strcmp(discountendtime,"0000:00:00:00:00")==0){
+        if(strcmp(discountendtime,"0000:00:00:00:00")==0){//保证可以输入0000:00:00:00:00
             valid=0;
         }
         if(valid==0&&phantom==' '){
@@ -1560,7 +1560,7 @@ void goodsadd(char *IDH){
             exit(1);
         }
         fprintf(infile,"%s %s %s %s %s %s %s %s %s %s %s\n",Commoditynumber,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime,Sales);
-        fclose(infile);
+        fclose(infile);//关闭文件
     }
 }
 
@@ -1583,13 +1583,13 @@ void Commoditysearch(char * COM,int x,int y){
     strcpy(Comparison, COM);
     while(fscanf(infile,"%s %s %s %s %s %s %s %s %s %s %s",Commoditynumber,marketname,commoditytype,brand,retailprice,purchaseprice,inventory,discountrate,discountstarttime,discountendtime,Sales)!=EOF){
         if(x==1){
-            strcpy(Comparisonb, commoditytype);
+            strcpy(Comparisonb, commoditytype);//按商品类别查找
         }
         if(x==2){
-            strcpy(Comparisonb, marketname);
+            strcpy(Comparisonb, marketname);//按商品名称查找
         }
         if(x==3){
-            strcpy(Comparisonb, brand);
+            strcpy(Comparisonb, brand);//按商品品牌查找
         }
         
         if( strcmp(Comparisonb,Comparison)==0&&(x==1||x==2||x==3)){//判定给出的变量
@@ -1666,7 +1666,7 @@ void Commoditysearch(char * COM,int x,int y){
                 }
             }
         }
-        printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");
+        printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");//美化程序外观
         for (int g=0; g<k; g++) {
             printf("%9s %13s %13s %11s %9s %11s %11s %15s %20s %20s %3s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
         }
@@ -1716,7 +1716,7 @@ void Commoditysearch(char * COM,int x,int y){
             }
         }
         printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");
-        for (int g=0; g<k; g++) {
+        for (int g=0; g<k; g++) {//美化程序外观
             printf("%9s %13s %13s %11s %9s %11s %11s %15s %20s %20s %3s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
         }
     }
@@ -1764,13 +1764,13 @@ void Commoditysearch(char * COM,int x,int y){
                 }
             }
         }
-        printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");
+        printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");//美化程序外观
         for (int g=0; g<k; g++) {
             printf("%9s %13s %13s %11s %9s %11s %11s %15s %20s %20s %3s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
         }
     }
     if(y==4){
-        printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");
+        printf("Commoditynumber  marketname  commoditytype  brand  retailprice  purchaseprice  inventory  discountrate  discountstarttime    discountendtime  Sales\n");//美化程序外观
         for (int g=0; g<k; g++) {
             printf("%9s %13s %13s %11s %9s %11s %11s %15s %20s %20s %3s\n",Commoditynumbera[g],marketnamea[g],commoditytypea[g],branda[g],retailpricea[g],purchasepricea[g],inventorya[g],discountratea[g],discountstarttimea[g],discountendtimea[g],Salesa[g]);
         }
@@ -1813,34 +1813,34 @@ void Recharge(char * IDU){
     scanf("%c",&phantom);
     if(strcmp(a,"a")==0)
     {balancea=balancea+1;
-        sprintf( Balance, "%f", balancea );
+        sprintf( Balance, "%f", balancea );//将浮点型转换为字符型
     }
     else if(strcmp(a,"b")==0)
     {balancea=balancea+5;
-        sprintf( Balance, "%f", balancea );
+        sprintf( Balance, "%f", balancea );//将浮点型转换为字符型
     }
     else if(strcmp(a,"c")==0)
     {balancea=balancea+50;
-        sprintf( Balance, "%f", balancea );
+        sprintf( Balance, "%f", balancea );//将浮点型转换为字符型
     }
     else if(strcmp(a,"d")==0)
     {balancea=balancea+100;
-        sprintf( Balance, "%f", balancea );
+        sprintf( Balance, "%f", balancea );//将浮点型转换为字符型
     }
     else if(strcmp(a,"e")==0)
     {balancea=balancea+500;
-        sprintf( Balance, "%f", balancea );
+        sprintf( Balance, "%f", balancea );//将浮点型转换为字符型
     }
     else if(strcmp(a,"f")==0)
     {balancea=balancea+5000;
-        sprintf( Balance, "%f", balancea );
+        sprintf( Balance, "%f", balancea );//将浮点型转换为字符型
     }
     else if(strcmp(a,"g")==0)
-    { return;
+    { return;//返回程序上一级
     }
     else{
         printf("Illegal input\n");
-        return;
+        return;//判定错误输入
     }
     printf("Enter the pass\n");
     scanf("%s",code);
